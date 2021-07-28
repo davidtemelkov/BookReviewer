@@ -19,7 +19,6 @@
 
             SeedGenres(data);
             SeedAuthors(data);
-            SeedBooks(data);
             data.Database.Migrate();
 
             return app;
@@ -72,34 +71,6 @@
                 PictureUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/John_Steinbeck_1939_%28cropped%29.jpg/220px-John_Steinbeck_1939_%28cropped%29.jpg",
                 Details = "John Ernst Steinbeck Jr. (/ˈstaɪnbɛk/; February 27, 1902 – December 20, 1968) was an American author and the 1962 Nobel Prize in Literature winner \"for his realistic and imaginative writings, combining as they do sympathetic humour and keen social perception.\"[2] He has been called \"a giant of American letters.\"" }
         });
-
-            data.SaveChanges();
-        }
-
-        public static void SeedBooks(ApplicationDbContext data)
-        {
-            if (data.Books.Any())
-            {
-                return;
-            }
-
-            var book = new Book
-            {
-                Title = "And Then There Were None",
-                AuthorId = 3,
-                Pages = 264,
-                CoverUrl = "https://agathachristie.imgix.net/hcuk-paperback/And-Then-There-Were-None.JPG?auto=compress,format&fit=clip&q=65&w=400",
-                DateAdded = DateTime.ParseExact("03.03.2004", "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Description = "First, there were ten—a curious assortment of strangers summoned as weekend guests to a little private island off the coast of Devon."
-            };
-
-            var bookGenre = new BookGenre { Book = book, GenreId = 18 };
-            var bookGenre2 = new BookGenre { Book = book, GenreId = 20 };
-
-            book.BookGenres.Add(bookGenre);
-            book.BookGenres.Add(bookGenre2);
-
-            data.Books.Add(book);
 
             data.SaveChanges();
         }

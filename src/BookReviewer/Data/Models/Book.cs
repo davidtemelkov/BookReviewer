@@ -35,8 +35,6 @@
 
         public Author Author { get; set; }
 
-        public ICollection<Review> Reviews { get; set; } = new List<Review>();
-
         public bool IsAccepted { get; set; }
 
         public DateTime DateAdded { get; init; } = DateTime.UtcNow;

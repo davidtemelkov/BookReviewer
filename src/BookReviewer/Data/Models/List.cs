@@ -21,7 +21,5 @@
         public int UserId { get; set; }
 
         public User User { get; set; }
-
-        public ICollection<Book> Books { get; init; } = new List<Book>();
     }
 }
