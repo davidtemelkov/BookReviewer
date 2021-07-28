@@ -4,14 +4,16 @@ using BookReviewer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReviewer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210727144944_AddedAuthorAndBookPicture")]
+    partial class AddedAuthorAndBookPicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,28 +98,6 @@ namespace BookReviewer.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("BookReviewer.Data.Models.BookGenre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("BookGenres");
-                });
-
             modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -125,11 +105,16 @@ namespace BookReviewer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("Genres");
                 });
@@ -421,23 +406,11 @@ namespace BookReviewer.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("BookReviewer.Data.Models.BookGenre", b =>
+            modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
                 {
-                    b.HasOne("BookReviewer.Data.Models.Book", "Book")
-                        .WithMany("BookGenres")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookReviewer.Data.Models.Genre", "Genre")
-                        .WithMany("BookGenres")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Genre");
+                    b.HasOne("BookReviewer.Data.Models.Book", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("BookReviewer.Data.Models.List", b =>
@@ -522,14 +495,9 @@ namespace BookReviewer.Migrations
 
             modelBuilder.Entity("BookReviewer.Data.Models.Book", b =>
                 {
-                    b.Navigation("BookGenres");
+                    b.Navigation("Genres");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
-                {
-                    b.Navigation("BookGenres");
                 });
 
             modelBuilder.Entity("BookReviewer.Data.Models.List", b =>

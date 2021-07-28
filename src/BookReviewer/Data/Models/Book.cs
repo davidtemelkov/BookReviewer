@@ -15,10 +15,12 @@
         public string Title { get; set; }
 
         [Required]
-        public DateTime ReleaseDate { get; set; }
+        public string CoverUrl { get; set; }
 
         [Required]
-        public ICollection<Genre> Genres { get; init; } = new List<Genre>();
+        public DateTime ReleaseDate { get; set; }
+
+        public ICollection<BookGenre> BookGenres { get; init; } = new List<BookGenre>();
 
         [Required]
         [MaxLength(BookMaxPages)]
@@ -36,5 +38,7 @@
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
 
         public bool IsAccepted { get; set; }
+
+        public DateTime DateAdded { get; init; } = DateTime.UtcNow;
     }
 }

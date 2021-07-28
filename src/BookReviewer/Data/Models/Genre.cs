@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Genre
@@ -8,5 +9,7 @@
 
         [Required]
         public string Name { get; set; }
+
+        public ICollection<BookGenre> BookGenres { get; init; } = new List<BookGenre>();
     }
 }

@@ -21,6 +21,8 @@
         [MaxLength(AuthorMaxDetails)]
         public string Details { get; set; }
 
+        public string PictureUrl { get; set; }
+
         public ICollection<Book> Books { get; init; } = new List<Book>();
     }
 }

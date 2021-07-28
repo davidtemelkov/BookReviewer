@@ -10,7 +10,6 @@ namespace BookReviewer
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -26,7 +25,17 @@ namespace BookReviewer
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<User>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 0;
+                options.Password.RequiredUniqueChars = 0;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
