@@ -54,23 +54,32 @@
             return RedirectToAction("Index", "Home");
         }
 
-        //public IActionResult Details(string id)
-        //{
-        //    var book = this.data.Books
-        //        .Where(b => b.Id == int.Parse(id))
-        //        .Select(b => new BookDetailsViewModel 
-        //        { 
-        //            Title = b.Title,
-        //            AuthorName = b.Author.Name,
-        //            AuthorId = b.Author.Id,
-        //            Pages = b.Pages,
-        //            CoverUlr = b.CoverUrl,
-        //            Description = b.Description
-        //        })
-        //        .FirstOrDefault();
+        public IActionResult Details(string id)
+        {
+            var book = this.data.Books
+                .Where(b => b.Id == int.Parse(id));
 
-        //    return View(book);
-        //}
+            var bookDetails = book.Select(b => new BookDetailsViewModel
+            {
+                Title = b.Title,
+                AuthorName = b.Author.Name,
+                AuthorId = b.Author.Id,
+                Pages = b.Pages,
+                CoverUlr = b.CoverUrl,
+                Description = b.Description,
+                YearPublished = b.YearPublished,
+                Genres = new List<string>()
+            })
+                .FirstOrDefault();
+
+
+            foreach (var bookGenre in book.FirstOrDefault().BookGenres)
+            {
+                bookDetails.Genres.Add(bookGenre.Genre.Name);
+            }
+
+            return View(bookDetails);
+        }
 
         private IEnumerable<BookGenresViewModel> GetGenres()
         {

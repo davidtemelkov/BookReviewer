@@ -1,1 +1,5 @@
-﻿
+﻿@model BookDetailsViewModel
+
+<h2>@Model.Title</h2>
+<img src="@Model.CoverUlr"/>
+<a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>

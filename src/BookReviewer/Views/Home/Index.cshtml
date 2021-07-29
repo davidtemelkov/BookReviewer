@@ -11,7 +11,7 @@
             <img class="card-img-top" src="@book.CoverUrl" alt="Card image cap">
             <div class="card-body">
                 <div style="text-align:center">
-                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="text-center">@book.Title</a>
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">@book.Title</a>
                 </div>
                 <div style="text-align:center">
                     <small class="text-center">@book.Author</small>

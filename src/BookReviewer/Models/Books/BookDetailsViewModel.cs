@@ -20,6 +20,6 @@
 
         public int Pages { get; init; }
 
-        public ICollection<BookGenre> BookGenres { get; init; }
+        public ICollection<string> Genres { get; init; }
     }
 }
