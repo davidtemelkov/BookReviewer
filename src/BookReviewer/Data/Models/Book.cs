@@ -18,7 +18,7 @@
         public string CoverUrl { get; set; }
 
         [Required]
-        public DateTime ReleaseDate { get; set; }
+        public string YearPublished { get; set; }
 
         public ICollection<BookGenre> BookGenres { get; init; } = new List<BookGenre>();
 

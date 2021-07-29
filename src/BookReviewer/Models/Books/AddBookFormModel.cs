@@ -20,7 +20,7 @@
 
         [Required]
         [Display(Name = "Year published")]
-        public string ReleaseDate { get; init; }
+        public string YearPublished { get; init; }
 
         [Required]
         //[MaxLength(BookMaxPages)]

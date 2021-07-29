@@ -1,26 +1,40 @@
-﻿using BookReviewer.Models;
+﻿using BookReviewer.Data;
+using BookReviewer.Models;
+using BookReviewer.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookReviewer.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext data;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            ApplicationDbContext data)
         {
             _logger = logger;
+            this.data = data;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var books = this.data
+                .Books
+                .OrderByDescending(b => b.DateAdded)
+                .Select(b => new BookGridViewModel 
+            { 
+                Id = b.Id,
+                Title = b.Title,
+                Author = b.Author.Name,
+                CoverUrl = b.CoverUrl
+            })
+                .ToList();
+
+            return View(books);
         }
 
         public IActionResult Privacy()

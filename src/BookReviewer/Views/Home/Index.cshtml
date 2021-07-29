@@ -1,3 +1,23 @@
-﻿<div class="text-center">
+﻿@model IEnumerable<BookGridViewModel>
+
+<div class="text-center">
     <h1 class="display-4">All books</h1>
+</div>
+<div class="row">
+    @foreach (var book in Model)
+    {
+    <div class="col-md-2">
+        <div class="card">
+            <img class="card-img-top" src="@book.CoverUrl" alt="Card image cap">
+            <div class="card-body">
+                <div style="text-align:center">
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="text-center">@book.Title</a>
+                </div>
+                <div style="text-align:center">
+                    <small class="text-center">@book.Author</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
 </div>

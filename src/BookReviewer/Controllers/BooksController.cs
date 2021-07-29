@@ -40,7 +40,7 @@
                 CoverUrl = book.CoverUrl,
                 Description = book.Description,
                 Pages = book.Pages,
-                ReleaseDate = DateTime.ParseExact(book.ReleaseDate, "yyyy", CultureInfo.InvariantCulture)
+                YearPublished = book.YearPublished
             };
 
             foreach (var genre in book.BookGenres)
@@ -53,6 +53,24 @@
 
             return RedirectToAction("Index", "Home");
         }
+
+        //public IActionResult Details(string id)
+        //{
+        //    var book = this.data.Books
+        //        .Where(b => b.Id == int.Parse(id))
+        //        .Select(b => new BookDetailsViewModel 
+        //        { 
+        //            Title = b.Title,
+        //            AuthorName = b.Author.Name,
+        //            AuthorId = b.Author.Id,
+        //            Pages = b.Pages,
+        //            CoverUlr = b.CoverUrl,
+        //            Description = b.Description
+        //        })
+        //        .FirstOrDefault();
+
+        //    return View(book);
+        //}
 
         private IEnumerable<BookGenresViewModel> GetGenres()
         {
