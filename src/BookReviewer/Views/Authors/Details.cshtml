@@ -1,6 +1,17 @@
-﻿@model AuthorDetailsViewModel 
+﻿@model AuthorDetailsViewModel
 
-    <h2>@Model.Name</h2>
-    <img src="@Model.PictureUrl"/>
-    <p>@Model.DateOfBirth</p>
-    <p>@Model.Details</p>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.PictureUrl" alt="..." /></div>
+            <div class="col-md-6">
+                <h2 class="display-5 fw-bolder">@Model.Name</h2>
+                <div class="fs-5 mb-5">
+                </div>
+                <p>Date of birth: @Model.DateOfBirth</p>
+                <span>Details:</span>
+                <p>@Model.Details</p>
+            </div>
+        </div>
+    </div>
+</section>
