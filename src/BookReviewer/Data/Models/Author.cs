@@ -23,6 +23,6 @@
 
         public string PictureUrl { get; set; }
 
-        public ICollection<Book> Books { get; init; } = new List<Book>();
+        public ICollection<Book> Books { get; init; } 
     }
 }

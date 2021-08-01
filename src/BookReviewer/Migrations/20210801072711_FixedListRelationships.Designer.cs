@@ -4,14 +4,16 @@ using BookReviewer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReviewer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210801072711_FixedListRelationships")]
+    partial class FixedListRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,7 +291,7 @@ namespace BookReviewer.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("UserBookLists");
+                    b.ToTable("UserBookList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -460,7 +462,7 @@ namespace BookReviewer.Migrations
             modelBuilder.Entity("BookReviewer.Data.Models.Review", b =>
                 {
                     b.HasOne("BookReviewer.Data.Models.Book", "Book")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("BookId1");
 
                     b.HasOne("BookReviewer.Data.Models.User", null)
@@ -475,7 +477,7 @@ namespace BookReviewer.Migrations
             modelBuilder.Entity("BookReviewer.Data.Models.UserBookList", b =>
                 {
                     b.HasOne("BookReviewer.Data.Models.Book", "Book")
-                        .WithMany("UserBookLists")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -554,10 +556,6 @@ namespace BookReviewer.Migrations
             modelBuilder.Entity("BookReviewer.Data.Models.Book", b =>
                 {
                     b.Navigation("BookGenres");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("UserBookLists");
                 });
 
             modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
