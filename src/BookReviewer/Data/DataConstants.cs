@@ -6,7 +6,7 @@
         public const int UserPasswordMaxValue = 20;
 
         public const int BookMaxTitle = 30;
-        public const int BookMaxDescription = 400;
+        public const int BookMaxDescription = 1000;
         public const int BookMaxPages = 3000;
 
         public const int AuthorMaxName = 30;

@@ -7,8 +7,8 @@
     {
         public string ProfilePicture { get; set; }
 
-        public ICollection<Review> Reviews { get; init; } 
+        public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
-        public ICollection<UserBookList> UserBookLists { get; init; } 
+        public ICollection<UserBookList> UserBookLists { get; init; } = new List<UserBookList>();
     }
 }

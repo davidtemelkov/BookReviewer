@@ -17,6 +17,6 @@
         [MaxLength(ListMaxDescription)]
         public string Description { get; set; }
 
-        public ICollection<UserBookList> UserBookLists { get; init; }
+        public ICollection<UserBookList> UserBookLists { get; init; } = new List<UserBookList>();
     }
 }

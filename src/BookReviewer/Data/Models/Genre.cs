@@ -10,6 +10,6 @@
         [Required]
         public string Name { get; set; }
 
-        public ICollection<BookGenre> BookGenres { get; init; } 
+        public ICollection<BookGenre> BookGenres { get; init; } = new List<BookGenre>();
     }
 }

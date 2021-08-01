@@ -20,11 +20,11 @@
         [Required]
         public string YearPublished { get; set; }
 
-        public ICollection<BookGenre> BookGenres { get; init; }
+        public ICollection<BookGenre> BookGenres { get; init; } = new List<BookGenre>();
 
-        public ICollection<Review> Reviews { get; init; }
+        public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
-        public ICollection<UserBookList> UserBookLists { get; init; }
+        public ICollection<UserBookList> UserBookLists { get; init; } = new List<UserBookList>();
 
         [Required]
         [MaxLength(BookMaxPages)]
