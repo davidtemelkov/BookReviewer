@@ -4,6 +4,7 @@
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Books;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -57,10 +58,13 @@
         public IActionResult Details(string id)
         {
             var book = this.data.Books
-                .Where(b => b.Id == int.Parse(id));
+                .Where(b => b.Id == int.Parse(id))
+                .Include(b => b.Reviews)
+                .ThenInclude(r => r.User);
 
             var bookDetails = book.Select(b => new BookDetailsViewModel
             {
+                Id = b.Id,
                 Title = b.Title,
                 AuthorName = b.Author.Name,
                 AuthorId = b.Author.Id,
@@ -68,15 +72,10 @@
                 CoverUlr = b.CoverUrl,
                 Description = b.Description,
                 YearPublished = b.YearPublished,
-                Genres = new List<string>()
+                Genres = string.Join(", ", b.BookGenres.Select(g => g.Genre.Name)),
+                Reviews = b.Reviews
             })
                 .FirstOrDefault();
-
-
-            foreach (var bookGenre in book.FirstOrDefault().BookGenres)
-            {
-                bookDetails.Genres.Add(bookGenre.Genre.Name);
-            }
 
             return View(bookDetails);
         }

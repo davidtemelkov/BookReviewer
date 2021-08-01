@@ -1,6 +1,6 @@
 ﻿namespace BookReviewer.Data.Models
 {
-    public class UserBookList
+    public class BookList
     {
         public int Id { get; init; }
 
@@ -11,9 +11,5 @@
         public int BookId { get; init; }
 
         public Book Book { get; init; }
-
-        public int UserId { get; init; }
-
-        public int User { get; init; }
     }
 }

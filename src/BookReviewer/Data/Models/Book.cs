@@ -24,7 +24,7 @@
 
         public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
-        public ICollection<UserBookList> UserBookLists { get; init; } = new List<UserBookList>();
+        public ICollection<BookList> BookLists { get; init; } = new List<BookList>();
 
         [Required]
         [MaxLength(BookMaxPages)]

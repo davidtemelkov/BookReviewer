@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using static DataConstants;
@@ -16,14 +17,16 @@
         [MaxLength(ReviewTextMaxValue)]
         public string Text { get; set; }
 
+        public DateTime DateAdded { get; init; } = DateTime.UtcNow;
+
         [Required]
-        public string BookId { get; set; }
+        public int BookId { get; set; }
 
         public Book Book { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
-        public string User { get; set; }
+        public User User { get; set; }
     }
 }

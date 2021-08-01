@@ -4,14 +4,16 @@ using BookReviewer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReviewer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210801184216_BookList")]
+    partial class BookList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +68,8 @@ namespace BookReviewer.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
@@ -114,6 +116,28 @@ namespace BookReviewer.Migrations
                     b.ToTable("BookGenres");
                 });
 
+            modelBuilder.Entity("BookReviewer.Data.Models.BookList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("ListId");
+
+                    b.ToTable("BookLists");
+                });
+
             modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -147,7 +171,12 @@ namespace BookReviewer.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Lists");
                 });
@@ -159,12 +188,11 @@ namespace BookReviewer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BookId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BookId1")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Stars")
                         .HasMaxLength(5)
@@ -175,16 +203,13 @@ namespace BookReviewer.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("User")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId1");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("UserId");
 
@@ -257,39 +282,6 @@ namespace BookReviewer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("BookReviewer.Data.Models.UserBookList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ListId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("User")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("ListId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("UserBookLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -457,42 +449,51 @@ namespace BookReviewer.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("BookReviewer.Data.Models.BookList", b =>
+                {
+                    b.HasOne("BookReviewer.Data.Models.Book", "Book")
+                        .WithMany("BookLists")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookReviewer.Data.Models.List", "List")
+                        .WithMany("BookLists")
+                        .HasForeignKey("ListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("List");
+                });
+
+            modelBuilder.Entity("BookReviewer.Data.Models.List", b =>
+                {
+                    b.HasOne("BookReviewer.Data.Models.User", "User")
+                        .WithMany("Lists")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BookReviewer.Data.Models.Review", b =>
                 {
                     b.HasOne("BookReviewer.Data.Models.Book", "Book")
                         .WithMany("Reviews")
-                        .HasForeignKey("BookId1");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("BookReviewer.Data.Models.User", null)
+                    b.HasOne("BookReviewer.Data.Models.User", "User")
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
-                });
 
-            modelBuilder.Entity("BookReviewer.Data.Models.UserBookList", b =>
-                {
-                    b.HasOne("BookReviewer.Data.Models.Book", "Book")
-                        .WithMany("UserBookLists")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookReviewer.Data.Models.List", "List")
-                        .WithMany("UserBookLists")
-                        .HasForeignKey("ListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookReviewer.Data.Models.User", null)
-                        .WithMany("UserBookLists")
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("List");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -555,9 +556,9 @@ namespace BookReviewer.Migrations
                 {
                     b.Navigation("BookGenres");
 
-                    b.Navigation("Reviews");
+                    b.Navigation("BookLists");
 
-                    b.Navigation("UserBookLists");
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("BookReviewer.Data.Models.Genre", b =>
@@ -567,14 +568,14 @@ namespace BookReviewer.Migrations
 
             modelBuilder.Entity("BookReviewer.Data.Models.List", b =>
                 {
-                    b.Navigation("UserBookLists");
+                    b.Navigation("BookLists");
                 });
 
             modelBuilder.Entity("BookReviewer.Data.Models.User", b =>
                 {
-                    b.Navigation("Reviews");
+                    b.Navigation("Lists");
 
-                    b.Navigation("UserBookLists");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

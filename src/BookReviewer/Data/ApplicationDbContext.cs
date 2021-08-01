@@ -19,7 +19,7 @@
 
         public DbSet<BookGenre> BookGenres { get; init; }
 
-        public DbSet<UserBookList> UserBookLists { get; init; }
+        public DbSet<BookList> BookLists { get; init; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

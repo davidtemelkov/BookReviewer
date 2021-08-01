@@ -2,6 +2,7 @@
 {
     using BookReviewer.Data.Models;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class BookDetailsViewModel
     {
@@ -20,6 +21,10 @@
 
         public int Pages { get; init; }
 
-        public ICollection<string> Genres { get; init; }
+        public string Genres { get; init; }
+
+        public ICollection<Review> Reviews { get; set; }
+
+        public string AverageRating =>  this.Reviews.Any() ? this.Reviews.Average(r => r.Stars).ToString() : "No ratings yet.";
     }
 }

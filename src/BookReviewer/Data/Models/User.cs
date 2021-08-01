@@ -9,6 +9,6 @@
 
         public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
-        public ICollection<UserBookList> UserBookLists { get; init; } = new List<UserBookList>();
+        public ICollection<List> Lists { get; init; } = new List<List>();
     }
 }
