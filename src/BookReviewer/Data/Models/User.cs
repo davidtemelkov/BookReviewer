@@ -9,12 +9,6 @@
     {
         public string ProfilePicture { get; set; } = UserDefaultProfilePicture;
 
-        public bool isAuthor { get; set; }
-
-        public int AuthorId { get; set; }
-
-        public Author Author { get; set; }
-
         public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
         public ICollection<List> Lists { get; init; } = new List<List>();
