@@ -20,7 +20,7 @@
                 <h4>Lists</h4>
                 @if (Model.AuthorId != null)
                 {
-                    <h4>Author page</h4>
+                    <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorId">Author page</a>
                 }
             </div>
         </div>
