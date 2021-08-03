@@ -13,7 +13,12 @@
     </div>
     <div class="form-group">
         <label asp-for="Author"></label>
-        <input asp-for="Author" class="form-control" placeholder="Enter name">
+        <select asp-for="Author" class="form-control mdb-select md-form" searchable="Currently available authors">
+            @foreach (var author in Model.Authors)
+	        {
+                <option>@author</option>
+	        }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="BookGenres"></label>

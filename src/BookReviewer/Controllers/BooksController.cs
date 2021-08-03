@@ -21,7 +21,8 @@
 
         public IActionResult Add() => View(new AddBookFormModel
         {
-            Genres = this.GetGenres()
+            Genres = this.GetGenres(),
+            Authors = this.GetAuthors()
         });
 
         [HttpPost]
@@ -30,6 +31,7 @@
             if (!ModelState.IsValid)
             {
                 book.Genres = this.GetGenres();
+                book.Authors = this.GetAuthors();
 
                 return View(book);
             }
@@ -89,6 +91,14 @@
                         Id = g.Id, 
                         Name = g.Name
                     })
+                    .ToList();
+        }
+
+        private IEnumerable<string> GetAuthors()
+        {
+            return this.data
+                    .Authors
+                    .Select(a => a.Name)
                     .ToList();
         }
     }

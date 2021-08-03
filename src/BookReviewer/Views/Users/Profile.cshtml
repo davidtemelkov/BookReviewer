@@ -1,0 +1,20 @@
+﻿@model UserProfileViewModel
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                <img class="card-img-top mb-5 mb-md-0" src="@Model.ProfilePictureUrl" alt="..."/>
+                <div class="text-center">
+                    <p class="mt-5">Change profile picture</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="display-5 fw-bolder">@Model.Username</h2>
+                <h4>Reviews</h4>
+                <h4>Lists</h4>
+                <h4>Author page</h4>
+            </div>
+        </div>
+    </div>
+</section>

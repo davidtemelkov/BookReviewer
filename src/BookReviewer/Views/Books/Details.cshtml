@@ -15,7 +15,7 @@
                 <p>Genres: @Model.Genres</p>
                 <p>Rating: @Model.AverageRating</p>
                 <p>Description:</p>
-                1             <p>@Model.Description</p>
+                <p>@Model.Description</p>
                 <a asp-controller="Reviews" asp-action="Add" asp-route-id="@Model.Id">Give this book a review</a>
             </div>
         </div>
@@ -28,10 +28,13 @@
         }
         else
         {
-            foreach (var review in Model.Reviews)
+            foreach (var review in Model.Reviews.OrderByDescending(x => x.DateAdded))
             {
-                <p>@review.User.UserName</p>
-                <p>@review.Text</p>
+                <p>@review.User.UserName rated it @review.Stars.ToString() stars</p>
+                @if (@review.Text != null)
+                {
+                    <p>@review.Text</p>
+                }
             }
         }
     </div>
