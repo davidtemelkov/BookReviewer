@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+    
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -9,7 +11,7 @@
             <a class="nav-link text-dark" asp-controller="Users" asp-action="BecomeAnAuthor">Become an author</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark"asp-controller="Users" asp-action="Profile">Profile</a>
+            <a class="nav-link text-dark" asp-controller="Users" asp-action="Profile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Profile</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

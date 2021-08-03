@@ -18,13 +18,21 @@
             this.data = data;
         }
 
-        public IActionResult Profile(UserProfileViewModel profile)
+        public IActionResult Profile(string id)
         {
-            profile.Username = User.FindFirstValue(ClaimTypes.Name);
-            profile.ProfilePictureUrl = this.data.Users
+            var profile = new UserProfileViewModel
+            {
+                Id = id,
+                Username = User.FindFirstValue(ClaimTypes.Name),
+                ProfilePictureUrl = this.data.Users
                 .Where(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
                 .FirstOrDefault()
-                .ProfilePicture;
+                .ProfilePicture,
+                AuthorId = this.data.Users
+                .Where(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .Select(u => u.AuthorId)
+                .FirstOrDefault()
+            };
 
             return View(profile);
         }
