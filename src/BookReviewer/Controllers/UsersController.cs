@@ -118,10 +118,15 @@
             return View(reviews);
         }
 
-        public IActionResult Lists(string id)
-        {
-            return View();
-        }
+        //public IActionResult Lists(string id)
+        //{
+        //    return View();
+        //}
+
+        //public IActionResult CreateList()
+        //{ 
+        //    return View();
+        //}
 
         private IEnumerable<BookGenresViewModel> GetGenres()
         {
