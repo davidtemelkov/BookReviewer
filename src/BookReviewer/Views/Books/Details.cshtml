@@ -1,5 +1,9 @@
 ﻿@model BookDetailsViewModel
 
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<User> UserManager
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
@@ -16,7 +20,10 @@
                 <p>Rating: @Model.AverageRating</p>
                 <p>Description:</p>
                 <p>@Model.Description</p>
-                <a asp-controller="Reviews" asp-action="Add" asp-route-id="@Model.Id">Give this book a review</a>
+                @if (@UserManager.GetUserAsync(User).Result.AuthorId != Model.AuthorId)
+                {
+                    <a asp-controller="Reviews" asp-action="Add" asp-route-id="@Model.Id">Give this book a review</a>
+                }
             </div>
         </div>
         <div class="row gx-4 gx-lg-5 mt-4 align-items-center">
@@ -30,7 +37,7 @@
         {
             foreach (var review in Model.Reviews.OrderByDescending(x => x.DateAdded))
             {
-                <p>@review.User.UserName rated it @review.Stars.ToString() stars</p>
+                <p><a asp-controller="Users" asp-action="Profile" asp-route-id="@review.UserId">@review.User.UserName</a> rated it @review.Stars.ToString() stars</p>
                 @if (@review.Text != null)
                 {
                     <p>@review.Text</p>

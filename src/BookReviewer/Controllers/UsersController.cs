@@ -5,6 +5,7 @@
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Users;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -25,15 +26,9 @@
             var profile = new UserProfileViewModel
             {
                 Id = id,
-                Username = User.FindFirstValue(ClaimTypes.Name),
-                ProfilePictureUrl = this.data.Users
-                .Where(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-                .FirstOrDefault()
-                .ProfilePicture,
-                AuthorId = this.data.Users
-                .Where(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-                .FirstOrDefault()
-                .AuthorId
+                Username = this.data.Users.FirstOrDefault(u => u.Id == id).UserName,
+                ProfilePictureUrl = this.data.Users.FirstOrDefault(u => u.Id == id).ProfilePicture,
+                AuthorId = this.data.Users.FirstOrDefault(u => u.Id == id).AuthorId
             };
 
             return View(profile);
@@ -108,6 +103,24 @@
             data.SaveChanges();
 
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult Reviews(string id)
+        {
+            var reviews = new AllReviewsViewModel {
+                Reviews = this.data.Reviews
+                .Where(r => r.UserId == id)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Author)
+                .Include(r => r.User)
+                .ToList()
+        };
+
+            return View(reviews);
+        }
+
+        public IActionResult Lists(string id)
+        {
+            return View();
         }
 
         private IEnumerable<BookGenresViewModel> GetGenres()

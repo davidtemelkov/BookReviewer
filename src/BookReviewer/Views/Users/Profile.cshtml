@@ -16,8 +16,8 @@
             </div>
             <div class="col-md-6">
                 <h2 class="display-5 fw-bolder">@Model.Username</h2>
-                <h4>Reviews</h4>
-                <h4>Lists</h4>
+                <a asp-controller="Users" asp-action="Reviews" asp-route-id="@Model.Id">Reviews</a>
+                <a asp-controller="Users" asp-action="Lists" asp-route-id="@Model.Id">Lists</a>
                 @if (Model.AuthorId != null)
                 {
                     <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorId">Author page</a>
