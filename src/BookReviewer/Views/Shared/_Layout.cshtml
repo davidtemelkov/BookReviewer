@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using BookReviewer.Infrastructure
+
 @inject SignInManager<User> SignInManager
 
 <!DOCTYPE html>
@@ -22,7 +24,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (User.IsAdmin())
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Add">Add Author</a>

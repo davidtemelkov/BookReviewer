@@ -3,26 +3,40 @@
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using System;
     using System.Linq;
+    using System.Threading.Tasks;
+
+    using static BookReviewer.Areas.Admin.AdminConstants;
 
     public static class ApplicationBuilderExtentions
     {
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var services = serviceScope.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<ApplicationDbContext>();
-
-            SeedGenres(data);
-            data.Database.Migrate();
+            SeedGenres(services);
+            SeedAdministrator(services);
+            MigrateDatabase(services);
 
             return app;
         }
 
-        public static void SeedGenres(ApplicationDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+            var data = services.GetRequiredService<ApplicationDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        public static void SeedGenres(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<ApplicationDbContext>();
+
             if (data.Genres.Any())
             {
                 return;
@@ -49,6 +63,41 @@
         });
 
             data.SaveChanges();
+        }
+
+        private static void SeedAdministrator(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task
+                .Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                    {
+                        return;
+                    }
+
+                    var role = new IdentityRole { Name = AdministratorRoleName };
+
+                    await roleManager.CreateAsync(role);
+
+                    const string username = "admin";
+                    const string adminEmail = "admin@crs.com";
+                    const string adminPassword = "admin12";
+
+                    var user = new User
+                    {
+                        Email = adminEmail,
+                        UserName = username
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, role.Name);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }
