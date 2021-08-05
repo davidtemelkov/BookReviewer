@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Services\Books\" />
-    <Folder Include="Services\Authors\" />
     <Folder Include="Views\Lists\" />
   </ItemGroup>
 

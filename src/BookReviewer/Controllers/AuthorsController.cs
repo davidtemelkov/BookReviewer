@@ -1,21 +1,16 @@
 ﻿namespace BookReviewer.Controllers
 {
-    using BookReviewer.Data;
-    using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
+    using BookReviewer.Services.Authors;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
 
     public class AuthorsController : Controller
     {
-        private readonly ApplicationDbContext data;
+        private readonly IAuthorService authors;
 
-        public AuthorsController(ApplicationDbContext data)
+        public AuthorsController(IAuthorService authors)
         {
-            this.data = data;
+            this.authors = authors;
         }
 
         public IActionResult Add() => View();
@@ -28,40 +23,14 @@
                 return View(author);
             }
 
-            var authorData = new Author
-            {
-                Name = author.Name,
-                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = author.Details,
-                PictureUrl = author.PictureUrl
-            };
-
-            this.data.Authors.Add(authorData);
-            this.data.SaveChanges();
+            authors.Create(author.Name,
+                author.DateOfBirth,
+                author.Details,
+                author.PictureUrl);
 
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Details(string id)
-        {
-            var author = this.data.Authors.Where(a => a.Id == int.Parse(id));
-
-            var authorDetails = author.Select(a => new AuthorDetailsViewModel
-            {
-                Name = a.Name,
-                DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
-                Details = a.Details,
-                PictureUrl = a.PictureUrl,
-                Books = new List<Book>()
-            })
-                .FirstOrDefault();
-
-            foreach (var book in this.data.Books.Where(b => b.AuthorId == int.Parse(id)))
-            {
-                authorDetails.Books.Add(book);
-            }
-
-            return View(authorDetails);
-        }
+        public IActionResult Details(string id) => View(authors.Details(id));
     }
 }

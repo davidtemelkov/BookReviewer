@@ -3,6 +3,7 @@ namespace BookReviewer
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Infrastructure;
+    using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,7 @@ namespace BookReviewer
             services.AddControllersWithViews();
 
             services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IAuthorService, AuthorService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
