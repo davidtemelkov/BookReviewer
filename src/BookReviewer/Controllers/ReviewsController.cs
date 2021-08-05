@@ -1,19 +1,17 @@
 ﻿namespace BookReviewer.Controllers
 {
-    using BookReviewer.Data;
-    using BookReviewer.Data.Models;
     using BookReviewer.Models.Reviews;
+    using BookReviewer.Services.Reviews;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
-    using System.Security.Claims;
+    using BookReviewer.Infrastructure;
 
     public class ReviewsController : Controller
     {
-        private readonly ApplicationDbContext data;
+        private readonly IReviewService reviews;
 
-        public ReviewsController(ApplicationDbContext data)
+        public ReviewsController(IReviewService reviews)
         {
-            this.data = data;
+            this.reviews = reviews;
         }
 
         public IActionResult Add()
@@ -29,16 +27,10 @@
                 return View(review);
             }
 
-            var reviewData = new Review 
-            {
-                Stars = review.Stars,
-                Text = review.Text,
-                BookId = int.Parse(id),
-                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-            };
-
-            this.data.Reviews.Add(reviewData);
-            this.data.SaveChanges();
+            reviews.Create(review.Stars,
+                review.Text,
+                id,
+                User.Id());
 
             return Redirect($"/Books/Details/{id}");
         }
