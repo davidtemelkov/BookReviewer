@@ -25,7 +25,7 @@
         <select asp-for="BookGenres" multiple class="form-control">
             @foreach (var genre in Model.Genres)
             {
-                <option>@genre.Name</option>
+                <option>@genre</option>
             }
         </select>
     </div>
