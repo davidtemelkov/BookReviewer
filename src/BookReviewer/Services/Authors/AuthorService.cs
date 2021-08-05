@@ -3,8 +3,8 @@
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
+    using BookReviewer.Models.Books;
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
@@ -44,14 +44,15 @@
                 DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
                 Details = a.Details,
                 PictureUrl = a.PictureUrl,
-                Books = new List<Book>()
+                Books = this.data.Books.Where(b => b.AuthorId == int.Parse(id)).Select(b => new BookGridViewModel {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Author = b.Author.Name,
+                    CoverUrl = b.CoverUrl
+                }).ToList()
+                
             })
                 .FirstOrDefault();
-
-            foreach (var book in this.data.Books.Where(b => b.AuthorId == int.Parse(id)))
-            {
-                authorDetails.Books.Add(book);
-            }
 
             return authorDetails;
         }

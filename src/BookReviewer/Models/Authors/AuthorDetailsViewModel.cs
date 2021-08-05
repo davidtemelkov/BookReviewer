@@ -1,6 +1,6 @@
 ﻿namespace BookReviewer.Models.Authors
 {
-    using BookReviewer.Data.Models;
+    using BookReviewer.Models.Books;
     using System.Collections.Generic;
 
     public class AuthorDetailsViewModel
@@ -13,6 +13,6 @@
 
         public string PictureUrl { get; init; }
 
-        public ICollection<Book> Books { get; init; }
+        public ICollection<BookGridViewModel> Books { get; init; }
     }
 }
