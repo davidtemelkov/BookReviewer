@@ -8,6 +8,8 @@
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Authors;
+    using BookReviewer.Services.Reviews;
+    using BookReviewer.Models.Reviews;
 
     public class UsersController : Controller
     {
@@ -15,15 +17,18 @@
         private readonly IUserService users;
         private readonly IBookService books;
         private readonly IAuthorService authors;
+        private readonly IReviewService reviews;
 
         public UsersController(ApplicationDbContext data, IUserService users,
             IBookService books,
-            IAuthorService authors)
+            IAuthorService authors,
+            IReviewService reviews)
         {
             this.data = data;
             this.users = users;
             this.books = books;
             this.authors = authors;
+            this.reviews = reviews;
         }
 
         public IActionResult Profile(string id) => View(users.Profile(id));
@@ -129,6 +134,39 @@
             users.EditAuthor(id, editedAuthor);
 
             return Redirect($"/Authors/Details/{id}");
+        }
+
+        public IActionResult EditReview(string id)
+        {
+            var review = this.data.Reviews.Find(int.Parse(id));
+
+            var editReviewForm = new ReviewFormModel 
+            {
+                Stars = review.Stars,
+                Text = review.Text
+            };
+
+            return View(editReviewForm);
+        }
+
+        [HttpPost]
+        public IActionResult EditReview(string id, ReviewFormModel editedReview)
+        {
+            var currentUserId = User.Id();
+            this.users.EditReview(id, editedReview);
+
+            return Redirect($"/Users/Reviews/{currentUserId}");
+        }
+
+        public IActionResult DeleteReview(string id)
+        {
+            var userId = User.Id();
+
+            var review = this.data.Reviews.Find(int.Parse(id));
+            this.data.Reviews.Remove(review);
+            this.data.SaveChanges();
+
+            return Redirect($"/Users/Reviews/{userId}");
         }
 
         //public IActionResult Lists(string id)

@@ -1,6 +1,6 @@
 ﻿namespace BookReviewer.Models.Reviews
 {
-    public class AddReviewFormModel
+    public class ReviewFormModel
     {
         public int Stars { get; init; }
 

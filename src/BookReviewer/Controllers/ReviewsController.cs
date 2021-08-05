@@ -20,7 +20,7 @@
         }
 
         [HttpPost]
-        public IActionResult Add(string id, AddReviewFormModel review)
+        public IActionResult Add(string id, ReviewFormModel review)
         {
             if (!ModelState.IsValid)
             {

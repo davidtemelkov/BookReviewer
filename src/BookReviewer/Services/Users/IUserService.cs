@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Services.Users
 {
     using BookReviewer.Data.Models;
+    using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
     using System.Collections.Generic;
 
@@ -27,5 +28,7 @@
         void EditBook(string id, UserBookFormModel editedBook);
 
         void EditAuthor(string id, AuthorFormModel editedAuthor);
+
+        void EditReview(string id, ReviewFormModel editedReview);
     }
 }

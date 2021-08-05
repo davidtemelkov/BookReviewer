@@ -1,5 +1,10 @@
 ﻿@model AllReviewsViewModel
 
+@using Microsoft.AspNetCore.Identity
+@using BookReviewer.Infrastructure 
+
+@inject UserManager<User> UserManager
+
 @if (!Model.Reviews.Any())
 {
     <h4>No reviews yet</h4>
@@ -8,18 +13,27 @@ else
 {
     foreach (var review in Model.Reviews.OrderByDescending(r => r.DateAdded))
     {
-        <div>
-            <a asp-controller="Books" asp-action="Details" asp-route-id="@review.BookId" class="display-5 fw-bolder">@review.Book.Title</a>
-            <img src="@review.Book.CoverUrl" alt="..." height="150" width="100" />
-            <div class="fs-5 mb-5">
-                <span class="text-decoration-line-through">By</span>
+        <div class="row mb-4" style="border:ridge">
+            <img class="ml-2 mt-2 mb-2" src="@review.Book.CoverUrl" alt="..." height="150" width="100" />
+            <div class="mb-3 mt-3 ml-3">
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@review.BookId" class="display-5 fw-bolder">@review.Book.Title</a>
+                <span class="text-decoration-line-through">by</span>
                 <a asp-controller="Authors" asp-action="Details" asp-route-id="@review.Book.AuthorId">@review.Book.Author.Name</a>
+                <p class="mt-2">@review.User.UserName rated it @review.Stars.ToString() stars</p>
+
+                @if (@review.Text != null)
+                {
+                    <p>@review.Text</p>
+                }
+
+                @if (User.Id() == review.UserId)
+                {
+                    <p>
+                        <a class="btn-warning" asp-controller="Users" asp-action="EditReview" asp-route-id="@review.Id">Edit</a>
+                        <a class="btn-danger" asp-controller="Users" asp-action="DeleteReview" asp-route-id="@review.Id">Delete</a>
+                    </p>
+                }
             </div>
         </div>
-        <p>@review.User.UserName rated it @review.Stars.ToString() stars</p>
-        @if (@review.Text != null)
-        {
-            <p>@review.Text</p>
-        }
     }
 }

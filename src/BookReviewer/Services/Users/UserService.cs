@@ -2,6 +2,7 @@
 {
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
+    using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
     using Microsoft.EntityFrameworkCore;
     using System;
@@ -102,6 +103,16 @@
             authorData.DateOfBirth = DateTime.ParseExact(editedAuthor.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             authorData.Details = editedAuthor.Details;
             authorData.PictureUrl = editedAuthor.PictureUrl;
+
+            this.data.SaveChanges();
+        }
+
+        public void EditReview(string id, ReviewFormModel editedReview)
+        {
+            var reviewData = this.data.Reviews.Find(int.Parse(id));
+
+            reviewData.Stars = editedReview.Stars;
+            reviewData.Text = editedReview.Text;
 
             this.data.SaveChanges();
         }
