@@ -20,6 +20,6 @@
 
         [Display(Name = "Genres")]
         public ICollection<string> BookGenres { get; init; }
-        public IEnumerable<BookGenresViewModel> Genres { get; set; }
+        public IEnumerable<string> Genres { get; set; }
     }
 }

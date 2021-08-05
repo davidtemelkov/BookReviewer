@@ -85,8 +85,6 @@
             return bookDetails;
         }
 
-
-
         public IEnumerable<string> GetGenres()
         {
             return this.data

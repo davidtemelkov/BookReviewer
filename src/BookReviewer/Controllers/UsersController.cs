@@ -1,38 +1,28 @@
 ﻿namespace BookReviewer.Controllers
 {
     using BookReviewer.Data;
-    using BookReviewer.Data.Models;
-    using BookReviewer.Models.Books;
     using BookReviewer.Models.Users;
+    using BookReviewer.Services.Users;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Security.Claims;
+    using BookReviewer.Infrastructure;
+    using BookReviewer.Services.Books;
 
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext data;
+        private readonly IUserService users;
+        private readonly IBookService books;
 
-        public UsersController(ApplicationDbContext data)
+        public UsersController(ApplicationDbContext data, IUserService users,
+            IBookService books)
         {
             this.data = data;
+            this.users = users;
+            this.books = books;
         }
 
-        public IActionResult Profile(string id)
-        {
-            var profile = new UserProfileViewModel
-            {
-                Id = id,
-                Username = this.data.Users.FirstOrDefault(u => u.Id == id).UserName,
-                ProfilePictureUrl = this.data.Users.FirstOrDefault(u => u.Id == id).ProfilePicture,
-                AuthorId = this.data.Users.FirstOrDefault(u => u.Id == id).AuthorId
-            };
-
-            return View(profile);
-        }
+        public IActionResult Profile(string id) => View(users.Profile(id));
 
         public IActionResult BecomeAnAuthor()
         {
@@ -47,28 +37,18 @@
                 return View(author);
             }
 
-            var authorData = new Author
-            {
-                Name = author.Name,
-                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = author.Details,
-                PictureUrl = author.PictureUrl
-            };
-
-            this.data.Authors.Add(authorData);
-            this.data.SaveChanges();
-
-            this.data.Users
-                .FirstOrDefault(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-                .AuthorId = authorData.Id;
-            this.data.SaveChanges();
+            users.CreateAuthor(author.Name,
+                author.DateOfBirth,
+                author.Details,
+                author.PictureUrl,
+                User.Id());
 
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AddBook() => View(new UserAddBookFormModel
         {
-            Genres = this.GetGenres()
+            Genres = books.GetGenres()
         });
 
         [HttpPost]
@@ -76,47 +56,27 @@
         {
             if (!ModelState.IsValid)
             {
-                book.Genres = this.GetGenres();
+                book.Genres = books.GetGenres();
 
                 return View(book);
             }
 
             var currentUser = this.data.Users
-                .FirstOrDefault(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                .FirstOrDefault(u => u.Id == User.Id());
 
-            var bookData = new Book
-            {
-                Title = book.Title,
-                Author = data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
-                CoverUrl = book.CoverUrl,
-                Description = book.Description,
-                Pages = book.Pages,
-                YearPublished = book.YearPublished
-            };
-
-            foreach (var genre in book.BookGenres)
-            {
-                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
-            }
-
-            data.Books.Add(bookData);
-            data.SaveChanges();
+            users.AddBook(book.Title,
+                currentUser,
+                book.CoverUrl,
+                book.Description,
+                book.Pages,
+                book.YearPublished,
+                book.BookGenres
+                );
 
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult Reviews(string id)
-        {
-            var reviews = new AllReviewsViewModel {
-                Reviews = this.data.Reviews
-                .Where(r => r.UserId == id)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Author)
-                .Include(r => r.User)
-                .ToList()
-        };
 
-            return View(reviews);
-        }
+        public IActionResult Reviews(string id) => View(users.AllUserReviews(id));
 
         //public IActionResult Lists(string id)
         //{
@@ -127,17 +87,5 @@
         //{ 
         //    return View();
         //}
-
-        private IEnumerable<BookGenresViewModel> GetGenres()
-        {
-            return this.data
-                    .Genres
-                    .Select(g => new BookGenresViewModel
-                    {
-                        Id = g.Id,
-                        Name = g.Name
-                    })
-                    .ToList();
-        }
     }
 }
