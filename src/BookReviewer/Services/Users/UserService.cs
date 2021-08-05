@@ -94,6 +94,18 @@
             this.data.SaveChanges();
         }
 
+        public void EditAuthor(string id, AuthorFormModel editedAuthor)
+        {
+            var authorData = this.data.Authors.Find(int.Parse(id));
+
+            authorData.Name = editedAuthor.Name;
+            authorData.DateOfBirth = DateTime.ParseExact(editedAuthor.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            authorData.Details = editedAuthor.Details;
+            authorData.PictureUrl = editedAuthor.PictureUrl;
+
+            this.data.SaveChanges();
+        }
+
         public AllReviewsViewModel AllUserReviews(string id)
         {
             var reviews = new AllReviewsViewModel

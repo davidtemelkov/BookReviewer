@@ -5,6 +5,8 @@
 
     public class AuthorDetailsViewModel
     {
+        public int Id { get; init; }
+
         public string Name { get; init; }
 
         public string DateOfBirth { get; init; }

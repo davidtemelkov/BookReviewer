@@ -40,6 +40,7 @@
 
             var authorDetails = author.Select(a => new AuthorDetailsViewModel
             {
+                Id = int.Parse(id),
                 Name = a.Name,
                 DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
                 Details = a.Details,

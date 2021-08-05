@@ -7,19 +7,23 @@
     using System.Linq;
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Books;
+    using BookReviewer.Services.Authors;
 
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext data;
         private readonly IUserService users;
         private readonly IBookService books;
+        private readonly IAuthorService authors;
 
         public UsersController(ApplicationDbContext data, IUserService users,
-            IBookService books)
+            IBookService books,
+            IAuthorService authors)
         {
             this.data = data;
             this.users = users;
             this.books = books;
+            this.authors = authors;
         }
 
         public IActionResult Profile(string id) => View(users.Profile(id));
@@ -30,7 +34,7 @@
         }
 
         [HttpPost]
-        public IActionResult BecomeAnAuthor(BecomeAnAuthorFormModel author)
+        public IActionResult BecomeAnAuthor(AuthorFormModel author)
         {
             if (!ModelState.IsValid)
             {
@@ -104,10 +108,28 @@
             return Redirect($"/Books/Details/{id}");
         }
 
-        //public IActionResult EditAuthorDetails(string id)
-        //{
-        //    return Redirect($"/Author/Details/{id}");
-        //}
+        public IActionResult EditAuthorDetails(string id)
+        {
+            var author = this.authors.Details(id);
+
+            var editAuthorForm = new AuthorFormModel
+            {
+                Name = author.Name,
+                DateOfBirth = author.DateOfBirth,
+                Details = author.Details,
+                PictureUrl = author.PictureUrl
+            };
+
+            return View(editAuthorForm);
+        }
+
+        [HttpPost]
+        public IActionResult EditAuthorDetails(string id, AuthorFormModel editedAuthor)
+        {
+            users.EditAuthor(id, editedAuthor);
+
+            return Redirect($"/Authors/Details/{id}");
+        }
 
         //public IActionResult Lists(string id)
         //{

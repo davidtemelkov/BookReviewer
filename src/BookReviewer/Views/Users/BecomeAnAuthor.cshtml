@@ -1,4 +1,4 @@
-﻿@model BecomeAnAuthorFormModel
+﻿@model AuthorFormModel
 
 @{
     ViewData["Title"] = "Become an author | ";
@@ -6,22 +6,4 @@
 
 <h2>Become an author</h2>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" placeholder="Enter name">
-    </div>
-    <div class="form-group">
-        <label asp-for="DateOfBirth"></label>
-        <input asp-for="DateOfBirth" class="form-control" placeholder="dd.MM.yyyy">
-    </div>
-    <div class="form-group">
-        <label asp-for="Details"></label>
-        <textarea asp-for="Details" class="form-control" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="PictureUrl"></label>
-        <input asp-for="PictureUrl" class="form-control" placeholder="Photo URL">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<partial name="_AuthorFormPartial" model="Model"/>

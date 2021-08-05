@@ -25,5 +25,7 @@
         AllReviewsViewModel AllUserReviews(string id);
 
         void EditBook(string id, UserBookFormModel editedBook);
+
+        void EditAuthor(string id, AuthorFormModel editedAuthor);
     }
 }

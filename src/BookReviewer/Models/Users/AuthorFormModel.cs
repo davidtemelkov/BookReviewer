@@ -1,6 +1,6 @@
 ﻿namespace BookReviewer.Models.Users
 {
-    public class BecomeAnAuthorFormModel
+    public class AuthorFormModel
     {
         public string Name { get; init; }
 
