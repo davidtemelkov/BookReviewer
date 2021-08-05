@@ -23,5 +23,7 @@
             ICollection<string> bookGenres);
 
         AllReviewsViewModel AllUserReviews(string id);
+
+        void EditBook(string id, UserBookFormModel editedBook);
     }
 }

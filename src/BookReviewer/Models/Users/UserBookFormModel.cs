@@ -1,10 +1,9 @@
 ﻿namespace BookReviewer.Models.Users
 {
-    using BookReviewer.Models.Books;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserAddBookFormModel
+    public class UserBookFormModel
     {
         public string Title { get; init; }
 

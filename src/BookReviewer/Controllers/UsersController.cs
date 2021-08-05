@@ -46,13 +46,13 @@
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AddBook() => View(new UserAddBookFormModel
+        public IActionResult AddBook() => View(new UserBookFormModel
         {
             Genres = books.GetGenres()
         });
 
         [HttpPost]
-        public IActionResult AddBook(UserAddBookFormModel book)
+        public IActionResult AddBook(UserBookFormModel book)
         {
             if (!ModelState.IsValid)
             {
@@ -77,6 +77,37 @@
         }
 
         public IActionResult Reviews(string id) => View(users.AllUserReviews(id));
+        
+        public IActionResult EditBookDetails(string id)
+        {
+            var book = this.books.BookDetails(id);
+
+            var editBookForm = new UserBookFormModel 
+            {
+                Title = book.Title,
+                Author = book.AuthorName,
+                CoverUrl = book.CoverUlr,
+                Pages = book.Pages,
+                YearPublished = book.YearPublished,
+                Description = book.Description,
+                Genres = books.GetGenres()
+            };
+
+            return View(editBookForm);
+        }
+
+        [HttpPost]
+        public IActionResult EditBookDetails(string id, UserBookFormModel editedBook)
+        {
+            users.EditBook(id, editedBook);
+
+            return Redirect($"/Books/Details/{id}");
+        }
+
+        //public IActionResult EditAuthorDetails(string id)
+        //{
+        //    return Redirect($"/Author/Details/{id}");
+        //}
 
         //public IActionResult Lists(string id)
         //{
