@@ -27,7 +27,7 @@
                 {
                     @if (@UserManager.GetUserAsync(User).Result.AuthorId != Model.AuthorId && Model.Reviews.Any(r => r.UserId == User.Id()) == false)
                     {
-                        <a asp-controller="Reviews" asp-action="Add" asp-route-id="@Model.Id">Give this book a review</a>
+                        <a class="btn btn-dark" asp-controller="Reviews" asp-action="Add" asp-route-id="@Model.Id">Give this book a review</a>
                     }
                     else if (Model.Reviews.Any(r => r.UserId == User.Id()))
                     {

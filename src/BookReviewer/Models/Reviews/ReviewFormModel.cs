@@ -6,8 +6,8 @@
 
     public class ReviewFormModel
     {
-        [Required]
-        [Range(ReviewMinStars, 
+        [Required(ErrorMessage = "This field is required!")]
+        [Range(ReviewMinStars,
             ReviewMaxStars,
             ErrorMessage = "Rating must be between {1} and {2}")]
         public int Stars { get; init; }

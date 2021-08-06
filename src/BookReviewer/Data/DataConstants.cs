@@ -15,7 +15,7 @@
         public const int BookMinPages = 1;
 
         public const int BookYearMaxChars = 4;
-        public const int BookYearMinChars = 3;
+        public const int BookYearMinChars = 4;
 
         public const int AuthorMaxName = 30;
         public const int AuthorMinName = 5;

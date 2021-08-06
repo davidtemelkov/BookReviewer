@@ -14,6 +14,8 @@
         [StringLength(AuthorDateOfBirthChars,
             MinimumLength = AuthorDateOfBirthChars,
             ErrorMessage = "Format must be dd.mm.yyyy")]
+
+        [Display(Name = "Date of birth")]
         public string DateOfBirth { get; init; }
 
         [Required]
@@ -24,6 +26,7 @@
 
         [Required]
         [Url]
+        [Display(Name = "Picture")]
         public string PictureUrl { get; init; }
     }
 }

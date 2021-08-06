@@ -25,7 +25,7 @@
 
         [Required]
         [StringLength(BookYearMaxChars, MinimumLength = BookYearMinChars,
-            ErrorMessage = "The year must be between {2} and {1} characters!")]
+            ErrorMessage = "The year must be {1} characters!")]
         [Display(Name = "Year published")]
         public string YearPublished { get; init; }
 
