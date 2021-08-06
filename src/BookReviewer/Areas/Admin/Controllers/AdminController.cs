@@ -41,14 +41,14 @@
             return Redirect("/");
         }
 
-        public IActionResult AddBook() => View(new AddBookFormModel
+        public IActionResult AddBook() => View(new BookFormModel
         {
             Genres = books.GetGenres(),
             Authors = books.GetAuthors()
         });
 
         [HttpPost]
-        public IActionResult AddBook(AddBookFormModel book)
+        public IActionResult AddBook(BookFormModel book)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +58,7 @@
                 return View(book);
             }
 
-            books.Create(book.Title,
+            books.AdminCreate(book.Title,
                 book.Author,
                 book.CoverUrl,
                 book.Description,

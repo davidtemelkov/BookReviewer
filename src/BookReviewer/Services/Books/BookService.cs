@@ -33,7 +33,7 @@
             return books;
         }
 
-        public void Create(string title,
+        public void AdminCreate(string title,
             string author,
             string coverUrl,
             string description,
@@ -45,6 +45,33 @@
             {
                 Title = title,
                 Author = data.Authors.FirstOrDefault(a => a.Name == author),
+                CoverUrl = coverUrl,
+                Description = description,
+                Pages = pages,
+                YearPublished = yearPublished
+            };
+
+            foreach (var genre in bookGenres)
+            {
+                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
+            }
+
+            data.Books.Add(bookData);
+            data.SaveChanges();
+        }
+
+        public void UserCreate(string title,
+            User currentUser,
+            string coverUrl,
+            string description,
+            int pages,
+            string yearPublished,
+            ICollection<string> bookGenres)
+        {
+            var bookData = new Book
+            {
+                Title = title,
+                Author = data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
                 CoverUrl = coverUrl,
                 Description = description,
                 Pages = pages,

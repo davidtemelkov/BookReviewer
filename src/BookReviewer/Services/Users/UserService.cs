@@ -2,6 +2,7 @@
 {
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
+    using BookReviewer.Models.Books;
     using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
     using Microsoft.EntityFrameworkCore;
@@ -55,34 +56,7 @@
             this.data.SaveChanges();
         }
 
-        public void AddBook(string title,
-            User currentUser,
-            string coverUrl,
-            string description,
-            int pages,
-            string yearPublished,
-            ICollection<string> bookGenres)
-        {
-            var bookData = new Book
-            {
-                Title = title,
-                Author = data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
-                CoverUrl = coverUrl,
-                Description = description,
-                Pages = pages,
-                YearPublished = yearPublished
-            };
-
-            foreach (var genre in bookGenres)
-            {
-                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
-            }
-
-            data.Books.Add(bookData);
-            data.SaveChanges();
-        }
-
-        public void EditBook(string id, UserBookFormModel editedBook)
+        public void EditBook(string id, BookFormModel editedBook)
         {
             var bookData = this.data.Books.Find(int.Parse(id));
 

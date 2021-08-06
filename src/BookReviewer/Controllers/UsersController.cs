@@ -10,6 +10,7 @@
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Reviews;
     using BookReviewer.Models.Reviews;
+    using BookReviewer.Models.Books;
 
     public class UsersController : Controller
     {
@@ -55,13 +56,13 @@
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AddBook() => View(new UserBookFormModel
+        public IActionResult AddBook() => View(new BookFormModel
         {
             Genres = books.GetGenres()
         });
 
         [HttpPost]
-        public IActionResult AddBook(UserBookFormModel book)
+        public IActionResult AddBook(BookFormModel book)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +74,7 @@
             var currentUser = this.data.Users
                 .FirstOrDefault(u => u.Id == User.Id());
 
-            users.AddBook(book.Title,
+            books.UserCreate(book.Title,
                 currentUser,
                 book.CoverUrl,
                 book.Description,
@@ -91,7 +92,7 @@
         {
             var book = this.books.BookDetails(id);
 
-            var editBookForm = new UserBookFormModel 
+            var editBookForm = new BookFormModel
             {
                 Title = book.Title,
                 Author = book.AuthorName,
@@ -106,7 +107,7 @@
         }
 
         [HttpPost]
-        public IActionResult EditBookDetails(string id, UserBookFormModel editedBook)
+        public IActionResult EditBookDetails(string id, BookFormModel editedBook)
         {
             this.users.EditBook(id, editedBook);
 
