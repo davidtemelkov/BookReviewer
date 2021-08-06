@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReviewer.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(BookReviewerDbContext))]
     [Migration("20210801073719_UpdatedBookCollections")]
     partial class UpdatedBookCollections
     {

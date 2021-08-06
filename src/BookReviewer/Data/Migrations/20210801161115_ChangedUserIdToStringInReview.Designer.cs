@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReviewer.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(BookReviewerDbContext))]
     [Migration("20210801161115_ChangedUserIdToStringInReview")]
     partial class ChangedUserIdToStringInReview
     {

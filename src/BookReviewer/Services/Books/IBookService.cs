@@ -8,10 +8,6 @@
     {
         IEnumerable<BookGridViewModel> GetBooks();
 
-        IEnumerable<string> GetGenres();
-
-        IEnumerable<string> GetAuthors();
-
         void AdminCreate(string title,
             string author,
             string coverUrl,

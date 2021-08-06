@@ -12,13 +12,13 @@
             @if (@UserManager.GetUserAsync(User).Result.AuthorId != null)
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Users" asp-action="AddBook">Add a book</a>
+                    <a class="nav-link text-dark" asp-controller="Books" asp-action="Add">Add a book</a>
                 </li>
             }
             else
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Users" asp-action="BecomeAnAuthor">Become an author</a>
+                    <a class="nav-link text-dark" asp-controller="Authors" asp-action="Add">Become an author</a>
                 </li>
             }
             <li class="nav-item">

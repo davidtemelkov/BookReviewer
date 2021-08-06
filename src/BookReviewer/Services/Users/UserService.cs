@@ -7,9 +7,9 @@
 
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext data;
+        private readonly BookReviewerDbContext data;
 
-        public UserService(ApplicationDbContext data)
+        public UserService(BookReviewerDbContext data)
         {
             this.data = data;
         }

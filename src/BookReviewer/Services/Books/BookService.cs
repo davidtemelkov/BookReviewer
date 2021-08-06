@@ -9,9 +9,9 @@
 
     public class BookService : IBookService
     {
-        private readonly ApplicationDbContext data;
+        private readonly BookReviewerDbContext data;
 
-        public BookService(ApplicationDbContext data)
+        public BookService(BookReviewerDbContext data)
         {
             this.data = data;
         }
@@ -123,22 +123,6 @@
                 .FirstOrDefault();
 
             return bookDetails;
-        }
-
-        public IEnumerable<string> GetGenres()
-        {
-            return this.data
-                    .Genres
-                    .Select(g => g.Name)
-                    .ToList();
-        }
-
-        public IEnumerable<string> GetAuthors()
-        {
-            return this.data
-                    .Authors
-                    .Select(a => a.Name)
-                    .ToList();
         }
     }
 }

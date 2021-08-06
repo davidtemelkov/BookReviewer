@@ -6,9 +6,9 @@
 
     public class ReviewService : IReviewService
     {
-        private readonly ApplicationDbContext data;
+        private readonly BookReviewerDbContext data;
 
-        public ReviewService(ApplicationDbContext data)
+        public ReviewService(BookReviewerDbContext data)
         {
             this.data = data;
         }

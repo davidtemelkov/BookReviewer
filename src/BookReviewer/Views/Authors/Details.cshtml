@@ -18,7 +18,7 @@
 
                 @if (@UserManager.GetUserAsync(User).Result.AuthorId == Model.Id)
                 {
-                    <a class="btn-block" asp-controller="Users" asp-action="EditAuthorDetails" asp-route-id="@Model.Id">Edit</a>
+                    <a class="btn-block" asp-controller="Authors" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
                 }
 
             </div>

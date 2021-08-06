@@ -6,14 +6,15 @@
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Users;
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
     public class AuthorService : IAuthorService
     {
-        private readonly ApplicationDbContext data;
+        private readonly BookReviewerDbContext data;
 
-        public AuthorService(ApplicationDbContext data)
+        public AuthorService(BookReviewerDbContext data)
         {
             this.data = data;
         }
@@ -92,6 +93,14 @@
                 .FirstOrDefault();
 
             return authorDetails;
+        }
+
+        public IEnumerable<string> GetAuthors()
+        {
+            return this.data
+                    .Authors
+                    .Select(a => a.Name)
+                    .ToList();
         }
     }
 }

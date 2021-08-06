@@ -2,6 +2,7 @@
 {
     using BookReviewer.Models.Authors;
     using BookReviewer.Models.Users;
+    using System.Collections.Generic;
 
     public interface IAuthorService
     {
@@ -19,5 +20,7 @@
         void Edit(string id, AuthorFormModel editedAuthor);
 
         AuthorDetailsViewModel Details(string id);
+
+        IEnumerable<string> GetAuthors();
     }
 }

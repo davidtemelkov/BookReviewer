@@ -5,9 +5,9 @@
 
     public class ListsController : Controller
     {
-        private readonly ApplicationDbContext data;
+        private readonly BookReviewerDbContext data;
 
-        public ListsController(ApplicationDbContext data)
+        public ListsController(BookReviewerDbContext data)
         {
             this.data = data;
         }

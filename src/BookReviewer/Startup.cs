@@ -5,6 +5,7 @@ namespace BookReviewer
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
+    using BookReviewer.Services.Genres;
     using BookReviewer.Services.Reviews;
     using BookReviewer.Services.Users;
     using Microsoft.AspNetCore.Builder;
@@ -25,7 +26,7 @@ namespace BookReviewer
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<BookReviewerDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -42,13 +43,14 @@ namespace BookReviewer
                 options.Password.RequiredUniqueChars = 0;
             })
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<BookReviewerDbContext>();
             services.AddControllersWithViews();
 
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IGenreService, GenreService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

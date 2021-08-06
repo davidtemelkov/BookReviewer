@@ -28,14 +28,14 @@
 
         private static void MigrateDatabase(IServiceProvider services)
         {
-            var data = services.GetRequiredService<ApplicationDbContext>();
+            var data = services.GetRequiredService<BookReviewerDbContext>();
 
             data.Database.Migrate();
         }
 
         public static void SeedGenres(IServiceProvider services)
         {
-            var data = services.GetRequiredService<ApplicationDbContext>();
+            var data = services.GetRequiredService<BookReviewerDbContext>();
 
             if (data.Genres.Any())
             {

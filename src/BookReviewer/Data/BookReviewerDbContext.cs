@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class BookReviewerDbContext : IdentityDbContext<User>
     {
         public DbSet<Book> Books { get; init; }
 
@@ -21,7 +21,7 @@
 
         public DbSet<BookList> BookLists { get; init; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BookReviewerDbContext(DbContextOptions<BookReviewerDbContext> options)
             : base(options)
         {
         }

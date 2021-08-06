@@ -19,7 +19,11 @@
 
         public const int AuthorMaxName = 30;
         public const int AuthorMinName = 5;
-        public const int AuthorMaxDetails = 1000;
+
+        public const int AuthorDateOfBirthChars = 10;
+
+        public const int AuthorMaxDetails = 2000;
+        public const int AuthorMinDetails = 200;
 
         public const int ReviewMaxStars = 5;
         public const int ReviewTextMaxValue = 1000;

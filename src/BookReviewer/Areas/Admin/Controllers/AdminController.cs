@@ -1,9 +1,10 @@
 ﻿namespace BookReviewer.Areas.Admin.Controllers
 {
-    using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
+    using BookReviewer.Models.Users;
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
+    using BookReviewer.Services.Genres;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +16,21 @@
     {
         private readonly IAuthorService authors;
         private readonly IBookService books;
+        private readonly IGenreService genres;
 
         public AdminController(IAuthorService authors,
-            IBookService books)
+            IBookService books,
+            IGenreService genres)
         {
             this.authors = authors;
             this.books = books;
+            this.genres = genres;
         }
 
         public IActionResult AddAuthor() => View();
 
         [HttpPost]
-        public IActionResult AddAuthor(AddAuthorFormModel author)
+        public IActionResult AddAuthor(AuthorFormModel author)
         {
             if (!ModelState.IsValid)
             {
@@ -43,8 +47,8 @@
 
         public IActionResult AddBook() => View(new BookFormModel
         {
-            Genres = books.GetGenres(),
-            Authors = books.GetAuthors()
+            Genres = this.genres.GetGenres(),
+            Authors = this.authors.GetAuthors()
         });
 
         [HttpPost]
@@ -52,8 +56,8 @@
         {
             if (!ModelState.IsValid)
             {
-                book.Genres = books.GetGenres();
-                book.Authors = books.GetAuthors();
+                book.Genres = this.genres.GetGenres();
+                book.Authors = this.authors.GetAuthors();
 
                 return View(book);
             }
