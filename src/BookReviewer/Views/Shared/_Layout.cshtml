@@ -27,10 +27,10 @@
                         @if (User.IsAdmin())
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Add">Add Author</a>
+                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="AddAuthor" asp-area="Admin">Add Author</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Add">Add Book</a>
+                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="AddBook" asp-area="Admin">Add Book</a>
                             </li>
                         }
                     </ul>
