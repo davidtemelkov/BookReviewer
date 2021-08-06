@@ -28,6 +28,8 @@
             string yearPublished,
             ICollection<string> bookGenres);
 
+        void Edit(string id, BookFormModel editedBook);
+
         BookDetailsViewModel BookDetails(string id);
     }
 }

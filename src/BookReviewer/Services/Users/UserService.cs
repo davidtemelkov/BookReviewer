@@ -56,19 +56,6 @@
             this.data.SaveChanges();
         }
 
-        public void EditBook(string id, BookFormModel editedBook)
-        {
-            var bookData = this.data.Books.Find(int.Parse(id));
-
-            bookData.Title = editedBook.Title;
-            bookData.CoverUrl = editedBook.CoverUrl;
-            bookData.Description = editedBook.Description;
-            bookData.Pages = editedBook.Pages;
-            bookData.YearPublished = editedBook.YearPublished;
-
-            this.data.SaveChanges();
-        }
-
         public void EditAuthor(string id, AuthorFormModel editedAuthor)
         {
             var authorData = this.data.Authors.Find(int.Parse(id));

@@ -109,7 +109,7 @@
         [HttpPost]
         public IActionResult EditBookDetails(string id, BookFormModel editedBook)
         {
-            this.users.EditBook(id, editedBook);
+            this.books.Edit(id, editedBook);
 
             return Redirect($"/Books/Details/{id}");
         }

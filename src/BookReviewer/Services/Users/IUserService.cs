@@ -18,8 +18,6 @@
 
         AllReviewsViewModel AllUserReviews(string id);
 
-        void EditBook(string id, BookFormModel editedBook);
-
         void EditAuthor(string id, AuthorFormModel editedAuthor);
 
         void EditReview(string id, ReviewFormModel editedReview);

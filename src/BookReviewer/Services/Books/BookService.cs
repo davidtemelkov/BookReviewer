@@ -87,6 +87,19 @@
             data.SaveChanges();
         }
 
+        public void Edit(string id, BookFormModel editedBook)
+        {
+            var bookData = this.data.Books.Find(int.Parse(id));
+
+            bookData.Title = editedBook.Title;
+            bookData.CoverUrl = editedBook.CoverUrl;
+            bookData.Description = editedBook.Description;
+            bookData.Pages = editedBook.Pages;
+            bookData.YearPublished = editedBook.YearPublished;
+
+            this.data.SaveChanges();
+        }
+
         public BookDetailsViewModel BookDetails(string id)
         {
             var book = this.data.Books
