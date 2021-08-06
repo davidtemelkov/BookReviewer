@@ -13,7 +13,6 @@
         [MaxLength(ReviewMaxStars)]
         public int Stars { get; set; }
 
-        [Required]
         [MaxLength(ReviewTextMaxValue)]
         public string Text { get; set; }
 

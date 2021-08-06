@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Areas.Admin.Controllers
 {
+    using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Users;
     using BookReviewer.Services.Authors;

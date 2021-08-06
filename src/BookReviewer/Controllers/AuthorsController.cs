@@ -1,9 +1,9 @@
 ﻿namespace BookReviewer.Controllers
 {
-    using BookReviewer.Models.Users;
     using BookReviewer.Services.Authors;
     using Microsoft.AspNetCore.Mvc;
     using BookReviewer.Infrastructure;
+    using BookReviewer.Models.Authors;
 
     public class AuthorsController : Controller
     {

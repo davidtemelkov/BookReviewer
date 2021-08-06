@@ -1,4 +1,4 @@
-﻿namespace BookReviewer.Models.Users
+﻿namespace BookReviewer.Models.Authors
 {
     using System.ComponentModel.DataAnnotations;
 
