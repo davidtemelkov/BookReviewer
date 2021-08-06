@@ -33,41 +33,6 @@
             return profile;
         }
 
-        public void CreateAuthor(string name,
-          string dateOfBirth,
-          string details,
-          string pictureUrl,
-          string userId)
-        {
-            var authorData = new Author
-            {
-                Name = name,
-                DateOfBirth = DateTime.ParseExact(dateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = details,
-                PictureUrl = pictureUrl
-            };
-
-            this.data.Authors.Add(authorData);
-            this.data.SaveChanges();
-
-            this.data.Users
-                .FirstOrDefault(u => u.Id == userId)
-                .AuthorId = authorData.Id;
-            this.data.SaveChanges();
-        }
-
-        public void EditAuthor(string id, AuthorFormModel editedAuthor)
-        {
-            var authorData = this.data.Authors.Find(int.Parse(id));
-
-            authorData.Name = editedAuthor.Name;
-            authorData.DateOfBirth = DateTime.ParseExact(editedAuthor.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture);
-            authorData.Details = editedAuthor.Details;
-            authorData.PictureUrl = editedAuthor.PictureUrl;
-
-            this.data.SaveChanges();
-        }
-
         public void EditReview(string id, ReviewFormModel editedReview)
         {
             var reviewData = this.data.Reviews.Find(int.Parse(id));

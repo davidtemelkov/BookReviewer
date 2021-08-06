@@ -33,7 +33,7 @@
                 return View(author);
             }
 
-            authors.Create(author.Name,
+            this.authors.AdminCreate(author.Name,
                 author.DateOfBirth,
                 author.Details,
                 author.PictureUrl);
@@ -58,7 +58,7 @@
                 return View(book);
             }
 
-            books.AdminCreate(book.Title,
+            this.books.AdminCreate(book.Title,
                 book.Author,
                 book.CoverUrl,
                 book.Description,

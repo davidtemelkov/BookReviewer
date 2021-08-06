@@ -47,7 +47,7 @@
                 return View(author);
             }
 
-            users.CreateAuthor(author.Name,
+            this.authors.UserCreate(author.Name,
                 author.DateOfBirth,
                 author.Details,
                 author.PictureUrl,
@@ -74,7 +74,7 @@
             var currentUser = this.data.Users
                 .FirstOrDefault(u => u.Id == User.Id());
 
-            books.UserCreate(book.Title,
+            this.books.UserCreate(book.Title,
                 currentUser,
                 book.CoverUrl,
                 book.Description,
@@ -132,7 +132,7 @@
         [HttpPost]
         public IActionResult EditAuthorDetails(string id, AuthorFormModel editedAuthor)
         {
-            users.EditAuthor(id, editedAuthor);
+            this.authors.Edit(id, editedAuthor);
 
             return Redirect($"/Authors/Details/{id}");
         }
