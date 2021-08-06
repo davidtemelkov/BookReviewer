@@ -27,12 +27,32 @@
                 return View(review);
             }
 
-            reviews.Create(review.Stars,
+            this.reviews.Create(review.Stars,
                 review.Text,
                 id,
                 User.Id());
 
             return Redirect($"/Books/Details/{id}");
+        }
+
+        public IActionResult Edit(string id) => View(this.reviews.Details(id));
+
+        [HttpPost]
+        public IActionResult Edit(string id, ReviewFormModel editedReview)
+        {
+            var currentUserId = User.Id();
+            this.reviews.Edit(id, editedReview);
+
+            return Redirect($"/Users/Reviews/{currentUserId}");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            var userId = User.Id();
+
+            this.reviews.Delete(id);
+
+            return Redirect($"/Users/Reviews/{userId}");
         }
     }
 }

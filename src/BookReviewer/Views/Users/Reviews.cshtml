@@ -29,8 +29,8 @@ else
                 @if (User.Id() == review.UserId)
                 {
                     <p>
-                        <a class="btn-warning" asp-controller="Users" asp-action="EditReview" asp-route-id="@review.Id">Edit</a>
-                        <a class="btn-danger" asp-controller="Users" asp-action="DeleteReview" asp-route-id="@review.Id">Delete</a>
+                        <a class="btn-warning" asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id">Edit</a>
+                        <a class="btn-danger" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id">Delete</a>
                     </p>
                 }
             </div>

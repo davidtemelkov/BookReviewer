@@ -9,7 +9,6 @@
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Reviews;
-    using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Books;
 
     public class UsersController : Controller
@@ -135,39 +134,6 @@
             this.authors.Edit(id, editedAuthor);
 
             return Redirect($"/Authors/Details/{id}");
-        }
-
-        public IActionResult EditReview(string id)
-        {
-            var review = this.data.Reviews.Find(int.Parse(id));
-
-            var editReviewForm = new ReviewFormModel 
-            {
-                Stars = review.Stars,
-                Text = review.Text
-            };
-
-            return View(editReviewForm);
-        }
-
-        [HttpPost]
-        public IActionResult EditReview(string id, ReviewFormModel editedReview)
-        {
-            var currentUserId = User.Id();
-            this.users.EditReview(id, editedReview);
-
-            return Redirect($"/Users/Reviews/{currentUserId}");
-        }
-
-        public IActionResult DeleteReview(string id)
-        {
-            var userId = User.Id();
-
-            var review = this.data.Reviews.Find(int.Parse(id));
-            this.data.Reviews.Remove(review);
-            this.data.SaveChanges();
-
-            return Redirect($"/Users/Reviews/{userId}");
         }
 
         //public IActionResult Lists(string id)

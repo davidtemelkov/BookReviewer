@@ -2,6 +2,7 @@
 {
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
+    using BookReviewer.Models.Reviews;
 
     public class ReviewService : IReviewService
     {
@@ -26,6 +27,36 @@
             };
 
             this.data.Reviews.Add(reviewData);
+            this.data.SaveChanges();
+        }
+
+        public void Edit(string id, ReviewFormModel editedReview)
+        {
+            var reviewData = this.data.Reviews.Find(int.Parse(id));
+
+            reviewData.Stars = editedReview.Stars;
+            reviewData.Text = editedReview.Text;
+
+            this.data.SaveChanges();
+        }
+
+        public ReviewFormModel Details(string id)
+        {
+            var review = this.data.Reviews.Find(int.Parse(id));
+
+            var editReviewForm = new ReviewFormModel
+            {
+                Stars = review.Stars,
+                Text = review.Text
+            };
+
+            return editReviewForm;
+        }
+
+        public void Delete(string id)
+        {
+            var review = this.data.Reviews.Find(int.Parse(id));
+            this.data.Reviews.Remove(review);
             this.data.SaveChanges();
         }
     }

@@ -1,14 +1,8 @@
 ﻿namespace BookReviewer.Services.Users
 {
     using BookReviewer.Data;
-    using BookReviewer.Data.Models;
-    using BookReviewer.Models.Books;
-    using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     public class UserService : IUserService
@@ -31,16 +25,6 @@
             };
 
             return profile;
-        }
-
-        public void EditReview(string id, ReviewFormModel editedReview)
-        {
-            var reviewData = this.data.Reviews.Find(int.Parse(id));
-
-            reviewData.Stars = editedReview.Stars;
-            reviewData.Text = editedReview.Text;
-
-            this.data.SaveChanges();
         }
 
         public AllReviewsViewModel AllUserReviews(string id)
