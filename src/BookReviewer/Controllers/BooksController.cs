@@ -79,7 +79,7 @@
             return Redirect($"/Books/Details/{id}");
         }
 
-        public IActionResult All() => View(books.GetBooks());
+        public IActionResult All() => View(books.GetAcceptedBooks());
 
         public IActionResult Details(string id) => View(books.BookDetails(id));
     }

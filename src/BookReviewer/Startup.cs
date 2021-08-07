@@ -6,6 +6,7 @@ namespace BookReviewer
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Genres;
+    using BookReviewer.Services.Lists;
     using BookReviewer.Services.Reviews;
     using BookReviewer.Services.Users;
     using Microsoft.AspNetCore.Builder;
@@ -51,6 +52,7 @@ namespace BookReviewer
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGenreService, GenreService>();
+            services.AddTransient<IListService, ListService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

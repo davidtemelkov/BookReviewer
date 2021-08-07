@@ -8,6 +8,10 @@
     {
         IEnumerable<BookGridViewModel> GetBooks();
 
+        IEnumerable<BookGridViewModel> GetAcceptedBooks();
+
+        IEnumerable<BookGridViewModel> GetNonAcceptedBooks();
+
         void AdminCreate(string title,
             string author,
             string coverUrl,

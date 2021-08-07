@@ -18,8 +18,8 @@
                 </div>
             </a>
             <p class="text-center">
-                <a class="btn btn-success" asp-controller="Admin" asp-action="AcceptBook" asp-area="Admin">Accept</a>
-                <a class="btn btn-danger" asp-controller="Admin" asp-action="DenyBook" asp-area="Admin">Deny</a>
+                <a class="btn btn-success" asp-controller="Admin" asp-action="AcceptBook" asp-area="Admin" asp-route-id="@book.Id">Accept</a>
+                <a class="btn btn-danger" asp-controller="Admin" asp-action="DenyBook" asp-area="Admin" asp-route-id="@book.Id">Deny</a>
             </p>
         </div>
         }

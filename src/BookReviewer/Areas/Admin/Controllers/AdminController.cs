@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Areas.Admin.Controllers
 {
+    using BookReviewer.Data;
     using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
     using BookReviewer.Services.Authors;
@@ -17,14 +18,17 @@
         private readonly IAuthorService authors;
         private readonly IBookService books;
         private readonly IGenreService genres;
+        private readonly BookReviewerDbContext data;
 
         public AdminController(IAuthorService authors,
             IBookService books,
-            IGenreService genres)
+            IGenreService genres,
+            BookReviewerDbContext data)
         {
             this.authors = authors;
             this.books = books;
             this.genres = genres;
+            this.data = data;
         }
 
         public IActionResult AddAuthor() => View();
@@ -73,19 +77,19 @@
             return Redirect("/");
         }
 
-        public IActionResult AcceptNewBooks()
-        {
-            var unacceptedBooks = this.books.GetBooks().Where(b => b.IsAccepted == false);
+        public IActionResult AcceptNewBooks() => View(this.books.GetNonAcceptedBooks());
 
-            return View(unacceptedBooks);
-        }
-
-        public IActionResult AcceptBook()
+        public IActionResult AcceptBook(string id)
         {
+            var book = this.data.Books.Find(int.Parse(id));
+
+            book.IsAccepted = true;
+            this.data.SaveChanges();
+
             return RedirectToAction("AcceptNewBooks", "Admin");
         }
 
-        public IActionResult DenyBook()
+        public IActionResult DenyBook(string id)
         {
             return RedirectToAction("AcceptNewBooks", "Admin");
         }

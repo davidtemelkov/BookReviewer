@@ -34,6 +34,43 @@
             return books;
         }
 
+        public IEnumerable<BookGridViewModel> GetAcceptedBooks()
+        {
+            var books = this.data
+               .Books
+               .OrderByDescending(b => b.DateAdded)
+               .Where(b => b.IsAccepted)
+               .Select(b => new BookGridViewModel
+               {
+                   Id = b.Id,
+                   Title = b.Title,
+                   Author = b.Author.Name,
+                   CoverUrl = b.CoverUrl,
+                   IsAccepted = b.IsAccepted
+               })
+               .ToList();
+
+            return books;
+        }
+
+        public IEnumerable<BookGridViewModel> GetNonAcceptedBooks()
+        {
+            var books = this.data
+               .Books
+               .Where(b => !b.IsAccepted)
+               .Select(b => new BookGridViewModel
+               {
+                   Id = b.Id,
+                   Title = b.Title,
+                   Author = b.Author.Name,
+                   CoverUrl = b.CoverUrl,
+                   IsAccepted = b.IsAccepted
+               })
+               .ToList();
+
+            return books;
+        }
+
         public void AdminCreate(string title,
             string author,
             string coverUrl,
@@ -55,11 +92,11 @@
 
             foreach (var genre in bookGenres)
             {
-                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
+                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = this.data.Genres.FirstOrDefault(g => g.Name == genre) });
             }
 
-            data.Books.Add(bookData);
-            data.SaveChanges();
+            this.data.Books.Add(bookData);
+            this.data.SaveChanges();
         }
 
         public void UserCreate(string title,
@@ -85,8 +122,8 @@
                 bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
             }
 
-            data.Books.Add(bookData);
-            data.SaveChanges();
+            this.data.Books.Add(bookData);
+            this.data.SaveChanges();
         }
 
         public void Edit(string id, BookFormModel editedBook)

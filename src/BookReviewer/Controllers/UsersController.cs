@@ -13,15 +13,5 @@
         }
 
         public IActionResult Profile(string id) => View(users.Profile(id));
-
-        //public IActionResult Lists(string id)
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult CreateList()
-        //{ 
-        //    return View();
-        //}
     }
 }

@@ -1,16 +1,34 @@
 ﻿namespace BookReviewer.Controllers
 {
-    using BookReviewer.Data;
+    using BookReviewer.Infrastructure;
+    using BookReviewer.Models.Lists;
+    using BookReviewer.Services.Lists;
     using Microsoft.AspNetCore.Mvc;
 
     public class ListsController : Controller
     {
-        private readonly BookReviewerDbContext data;
+        private readonly IListService lists;
 
-        public ListsController(BookReviewerDbContext data)
+        public ListsController(IListService lists)
         {
-            this.data = data;
+            this.lists = lists;
         }
-       
+
+        public IActionResult UserLists(string id)
+        {
+            return View();
+        }
+
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public IActionResult Create(ListFormModel form)
+        {
+            var currenUser = this.User.Id();
+
+            this.lists.Create(currenUser, form);
+
+            return View();
+        }
     }
 }
