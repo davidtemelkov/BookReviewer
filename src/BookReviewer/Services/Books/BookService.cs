@@ -49,7 +49,8 @@
                 CoverUrl = coverUrl,
                 Description = description,
                 Pages = pages,
-                YearPublished = yearPublished
+                YearPublished = yearPublished,
+                IsAccepted = true
             };
 
             foreach (var genre in bookGenres)
