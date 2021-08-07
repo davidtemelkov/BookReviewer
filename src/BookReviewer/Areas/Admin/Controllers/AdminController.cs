@@ -2,13 +2,12 @@
 {
     using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
-    using BookReviewer.Models.Users;
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Genres;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    using System.Linq;
     using static AdminConstants;
 
     [Area(AreaName)]
@@ -72,6 +71,23 @@
                 book.BookGenres);
 
             return Redirect("/");
+        }
+
+        public IActionResult AcceptNewBooks()
+        {
+            var unacceptedBooks = this.books.GetBooks().Where(b => b.IsAccepted == false);
+
+            return View(unacceptedBooks);
+        }
+
+        public IActionResult AcceptBook()
+        {
+            return RedirectToAction("AcceptNewBooks", "Admin");
+        }
+
+        public IActionResult DenyBook()
+        {
+            return RedirectToAction("AcceptNewBooks", "Admin");
         }
     }
 }

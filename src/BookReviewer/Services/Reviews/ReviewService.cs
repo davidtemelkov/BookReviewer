@@ -3,6 +3,9 @@
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Reviews;
+    using BookReviewer.Models.Users;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     public class ReviewService : IReviewService
     {
@@ -58,6 +61,21 @@
             var review = this.data.Reviews.Find(int.Parse(id));
             this.data.Reviews.Remove(review);
             this.data.SaveChanges();
+        }
+
+        public AllReviewsViewModel GetUserReviews(string id)
+        {
+            var reviews = new AllReviewsViewModel
+            {
+                Reviews = this.data.Reviews
+               .Where(r => r.UserId == id)
+               .Include(r => r.Book)
+               .ThenInclude(b => b.Author)
+               .Include(r => r.User)
+               .ToList()
+            };
+
+            return reviews;
         }
     }
 }

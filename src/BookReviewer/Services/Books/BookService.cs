@@ -26,7 +26,8 @@
                    Id = b.Id,
                    Title = b.Title,
                    Author = b.Author.Name,
-                   CoverUrl = b.CoverUrl
+                   CoverUrl = b.CoverUrl,
+                   IsAccepted = b.IsAccepted
                })
                .ToList();
 

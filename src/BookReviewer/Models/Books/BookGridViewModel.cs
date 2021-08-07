@@ -9,5 +9,7 @@
         public string Author { get; init; }
 
         public string CoverUrl { get; init; }
+
+        public bool IsAccepted { get; init; }
     }
 }

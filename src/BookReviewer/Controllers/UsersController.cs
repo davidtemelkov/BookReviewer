@@ -14,8 +14,6 @@
 
         public IActionResult Profile(string id) => View(users.Profile(id));
 
-        public IActionResult Reviews(string id) => View(users.AllUserReviews(id));
-
         //public IActionResult Lists(string id)
         //{
         //    return View();

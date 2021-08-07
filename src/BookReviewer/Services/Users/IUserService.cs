@@ -5,7 +5,5 @@
     public interface IUserService
     {
         UserProfileViewModel Profile(string id);
-
-        AllReviewsViewModel AllUserReviews(string id);
     }
 }

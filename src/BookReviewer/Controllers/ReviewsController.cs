@@ -43,7 +43,7 @@
             var currentUserId = User.Id();
             this.reviews.Edit(id, editedReview);
 
-            return Redirect($"/Users/Reviews/{currentUserId}");
+            return Redirect($"/Reviews/UserReviews/{currentUserId}");
         }
 
         public IActionResult Delete(string id)
@@ -52,7 +52,9 @@
 
             this.reviews.Delete(id);
 
-            return Redirect($"/Users/Reviews/{userId}");
+            return Redirect($"/Reviews/UserReviews/{userId}");
         }
+
+        public IActionResult UserReviews(string id) => View(this.reviews.GetUserReviews(id));
     }
 }
