@@ -77,5 +77,8 @@
 
             return reviews;
         }
+
+        public bool OwnsReview(string userId, string reviewId)
+            => userId == this.data.Reviews.Find(int.Parse(reviewId)).UserId;
     }
 }

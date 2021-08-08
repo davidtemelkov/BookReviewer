@@ -30,5 +30,15 @@
 
             return View();
         }
+
+        public IActionResult AddBookToList()
+        {
+            return View();
+        }
+
+        public IActionResult RemoveBookFromList()
+        {
+            return View();
+        }
     }
 }

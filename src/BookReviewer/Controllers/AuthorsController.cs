@@ -40,6 +40,11 @@
         [Authorize]
         public IActionResult Edit(string id)
         {
+            if (!this.authors.IsCurrentAuthor(User.Id(), id) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
             var author = this.authors.Details(id);
 
             var editAuthorForm = new AuthorFormModel

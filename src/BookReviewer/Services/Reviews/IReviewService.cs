@@ -17,5 +17,7 @@
         ReviewFormModel Details(string id);
 
         AllReviewsViewModel GetUserReviews(string id);
+
+        bool OwnsReview(string userId, string reviewId);
     }
 }

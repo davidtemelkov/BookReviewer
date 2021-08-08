@@ -39,7 +39,16 @@
         }
 
         [Authorize]
-        public IActionResult Edit(string id) => View(this.reviews.Details(id));
+        public IActionResult Edit(string id)
+        {
+            if (!this.reviews.OwnsReview(User.Id(), id) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            return View(this.reviews.Details(id));
+        }
+
 
         [Authorize]
         [HttpPost]
@@ -54,6 +63,11 @@
         [Authorize]
         public IActionResult Delete(string id)
         {
+            if (!this.reviews.OwnsReview(User.Id(), id) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
             var userId = User.Id();
 
             this.reviews.Delete(id);

@@ -8,27 +8,39 @@
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Genres;
     using Microsoft.AspNetCore.Authorization;
+    using BookReviewer.Services.Authors;
 
     public class BooksController : Controller
     {
         private readonly IBookService books;
         private readonly BookReviewerDbContext data;
         private readonly IGenreService genres;
+        private readonly IAuthorService authors;
 
         public BooksController(IBookService books,
             BookReviewerDbContext data,
-            IGenreService genres)
+            IGenreService genres,
+            IAuthorService authors)
         {
             this.books = books;
             this.data = data;
             this.genres = genres;
+            this.authors = authors;
         }
 
         [Authorize]
-        public IActionResult Add() => View(new BookFormModel
+        public IActionResult Add()
         {
-            Genres = this.genres.GetGenres()
-        });
+            if (!this.authors.IsAuthor(User.Id()))
+            {
+                return RedirectToAction("Add", "Authors");
+            }
+
+            return View(new BookFormModel
+            {
+                Genres = this.genres.GetGenres()
+            });
+        }
 
         [Authorize]
         [HttpPost]
@@ -59,6 +71,11 @@
         [Authorize]
         public IActionResult Edit(string id)
         {
+            if (!this.authors.IsAuthorOfBook(User.Id(), id) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
             var book = this.books.BookDetails(id);
 
             var editBookForm = new BookFormModel

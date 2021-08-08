@@ -22,5 +22,11 @@
         AuthorDetailsViewModel Details(string id);
 
         IEnumerable<string> GetAuthors();
+
+        bool IsAuthorOfBook(string userId, string bookId);
+
+        bool IsAuthor(string id);
+
+        bool IsCurrentAuthor(string userId, string authorId);
     }
 }

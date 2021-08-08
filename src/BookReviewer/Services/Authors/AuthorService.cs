@@ -98,6 +98,17 @@
             return authorDetails;
         }
 
+        public bool IsAuthor(string id) 
+            => this.data.Users.Find(id).AuthorId.HasValue;
+
+
+        public bool IsAuthorOfBook(string userId, string bookId)
+            => this.data.Users.Find(userId).AuthorId == this.data.Books.Find(int.Parse(bookId)).AuthorId;
+
+        public bool IsCurrentAuthor(string userId, string authorId) 
+            => this.data.Users.Find(userId).AuthorId == int.Parse(authorId);
+        
+
         public IEnumerable<string> GetAuthors()
         {
             return this.data
