@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using BookReviewer.Infrastructure;
     using BookReviewer.Models.Authors;
+    using Microsoft.AspNetCore.Authorization;
 
     public class AuthorsController : Controller
     {
@@ -36,6 +37,7 @@
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public IActionResult Edit(string id)
         {
             var author = this.authors.Details(id);
@@ -51,6 +53,7 @@
             return View(editAuthorForm);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(string id, AuthorFormModel editedAuthor)
         {

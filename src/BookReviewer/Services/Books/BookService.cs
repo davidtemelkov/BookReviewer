@@ -16,24 +16,6 @@
             this.data = data;
         }
 
-        public IEnumerable<BookGridViewModel> GetBooks() 
-        {
-            var books = this.data
-               .Books
-               .OrderByDescending(b => b.DateAdded)
-               .Select(b => new BookGridViewModel
-               {
-                   Id = b.Id,
-                   Title = b.Title,
-                   Author = b.Author.Name,
-                   CoverUrl = b.CoverUrl,
-                   IsAccepted = b.IsAccepted
-               })
-               .ToList();
-
-            return books;
-        }
-
         public IEnumerable<BookGridViewModel> GetAcceptedBooks()
         {
             var books = this.data
@@ -45,6 +27,7 @@
                    Id = b.Id,
                    Title = b.Title,
                    Author = b.Author.Name,
+                   AuthorId = b.AuthorId,
                    CoverUrl = b.CoverUrl,
                    IsAccepted = b.IsAccepted
                })
@@ -63,6 +46,7 @@
                    Id = b.Id,
                    Title = b.Title,
                    Author = b.Author.Name,
+                   AuthorId = b.AuthorId,
                    CoverUrl = b.CoverUrl,
                    IsAccepted = b.IsAccepted
                })

@@ -5,6 +5,7 @@
     using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Users;
+    using BookReviewer.Services.Books;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -13,10 +14,13 @@
     public class AuthorService : IAuthorService
     {
         private readonly BookReviewerDbContext data;
+        private readonly IBookService books;
 
-        public AuthorService(BookReviewerDbContext data)
+        public AuthorService(BookReviewerDbContext data,
+            IBookService books)
         {
             this.data = data;
+            this.books = books;
         }
 
         public void AdminCreate(string name,
@@ -82,13 +86,12 @@
                 DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
                 Details = a.Details,
                 PictureUrl = a.PictureUrl,
-                Books = this.data.Books.Where(b => b.AuthorId == int.Parse(id)).Select(b => new BookGridViewModel {
+                Books = this.data.Books.Where(b => b.AuthorId == int.Parse(id) && b.IsAccepted).Select(b => new BookGridViewModel {
                     Id = b.Id,
                     Title = b.Title,
                     Author = b.Author.Name,
                     CoverUrl = b.CoverUrl
                 }).ToList()
-                
             })
                 .FirstOrDefault();
 

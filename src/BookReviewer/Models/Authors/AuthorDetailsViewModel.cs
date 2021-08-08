@@ -15,6 +15,6 @@
 
         public string PictureUrl { get; init; }
 
-        public ICollection<BookGridViewModel> Books { get; init; }
+        public IEnumerable<BookGridViewModel> Books { get; init; }
     }
 }

@@ -6,8 +6,6 @@
 
     public interface IBookService
     {
-        IEnumerable<BookGridViewModel> GetBooks();
-
         IEnumerable<BookGridViewModel> GetAcceptedBooks();
 
         IEnumerable<BookGridViewModel> GetNonAcceptedBooks();

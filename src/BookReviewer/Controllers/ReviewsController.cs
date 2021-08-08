@@ -4,6 +4,7 @@
     using BookReviewer.Services.Reviews;
     using Microsoft.AspNetCore.Mvc;
     using BookReviewer.Infrastructure;
+    using Microsoft.AspNetCore.Authorization;
 
     public class ReviewsController : Controller
     {
@@ -14,11 +15,13 @@
             this.reviews = reviews;
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Add(string id, ReviewFormModel review)
         {
@@ -35,8 +38,10 @@
             return Redirect($"/Books/Details/{id}");
         }
 
+        [Authorize]
         public IActionResult Edit(string id) => View(this.reviews.Details(id));
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(string id, ReviewFormModel editedReview)
         {
@@ -46,6 +51,7 @@
             return Redirect($"/Reviews/UserReviews/{currentUserId}");
         }
 
+        [Authorize]
         public IActionResult Delete(string id)
         {
             var userId = User.Id();

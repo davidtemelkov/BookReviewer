@@ -7,6 +7,7 @@
     using System.Linq;
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Genres;
+    using Microsoft.AspNetCore.Authorization;
 
     public class BooksController : Controller
     {
@@ -23,11 +24,13 @@
             this.genres = genres;
         }
 
+        [Authorize]
         public IActionResult Add() => View(new BookFormModel
         {
             Genres = this.genres.GetGenres()
         });
 
+        [Authorize]
         [HttpPost]
         public IActionResult Add(BookFormModel book)
         {
@@ -53,6 +56,7 @@
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public IActionResult Edit(string id)
         {
             var book = this.books.BookDetails(id);
