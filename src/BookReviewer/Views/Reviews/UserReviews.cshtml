@@ -26,7 +26,7 @@ else
                     <p>@review.Text</p>
                 }
 
-                @if (User.Id() == review.UserId)
+                @if (User.Id() == review.UserId || User.IsAdmin())
                 {
                     <p>
                         <a class="btn btn-warning" asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id">Edit</a>
