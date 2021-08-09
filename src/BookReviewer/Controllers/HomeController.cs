@@ -1,11 +1,19 @@
 ﻿namespace BookReviewer.Controllers
 {
     using BookReviewer.Models;
+    using BookReviewer.Services.Emails;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
 
     public class HomeController : Controller
     {
+        private readonly IEmailService emails;
+
+        public HomeController(IEmailService emails)
+        {
+            this.emails = emails;
+        }
+
         public IActionResult Index()
         {
             return RedirectToAction("All", "Books");

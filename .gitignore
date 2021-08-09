@@ -5,6 +5,7 @@
 
 # User-specific files
 *.rsuser
+appsettings.json
 *.suo
 *.user
 *.userosscache

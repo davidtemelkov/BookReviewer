@@ -5,6 +5,7 @@ namespace BookReviewer
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
+    using BookReviewer.Services.Emails;
     using BookReviewer.Services.Genres;
     using BookReviewer.Services.Lists;
     using BookReviewer.Services.Reviews;
@@ -34,8 +35,8 @@ namespace BookReviewer
 
             services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
@@ -53,6 +54,7 @@ namespace BookReviewer
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGenreService, GenreService>();
             services.AddTransient<IListService, ListService>();
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
