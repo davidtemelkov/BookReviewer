@@ -1,16 +1,41 @@
-﻿@model IEnumerable<BookGridViewModel>
+﻿@model BookQueryViewModel
 
-@if (Model.Any())
+<form asp-controller="Books" asp-action="Search" method="get">
+    <div class="row d-flex justify-content-center">
+        <div class="form-group col-md-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="">
+        </div>
+        <div class="form-group">
+            <label asp-for="Genre">Genre</label>
+            <select asp-for="Genre" class="form-control">
+                <option>All</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option>@genre</option> 
+                }
+            </select>
+        </div>
+    </div>
+</form>
+
+@if (Model.Books.Any())
 {
     <section class="py-5 col-lg-12 col-md-8 col-sm-4">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <partial name="_BooksGridPartial" model="Model" />
+                <partial name="_BooksGridPartial" model="Model.Books" />
             </div>
         </div>
     </section>
 }
 else
 {
-    <div>No matches!</div>
+    <section class="py-5 col-lg-12 col-md-8 col-sm-4">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <h2>No matches!</h2>
+            </div>
+        </div>
+    </section>
 }

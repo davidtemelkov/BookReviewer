@@ -29,5 +29,7 @@
         void Edit(string id, BookFormModel editedBook);
 
         BookDetailsViewModel BookDetails(string id);
+
+        BookQueryViewModel SearchBooks(string searchTerm, string genre);
     }
 }

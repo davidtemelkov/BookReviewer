@@ -3,6 +3,7 @@
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Books;
+    using BookReviewer.Services.Genres;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,10 +11,13 @@
     public class BookService : IBookService
     {
         private readonly BookReviewerDbContext data;
+        private readonly IGenreService genres;
 
-        public BookService(BookReviewerDbContext data)
+        public BookService(BookReviewerDbContext data,
+            IGenreService genres)
         {
             this.data = data;
+            this.genres = genres;
         }
 
         public IEnumerable<BookGridViewModel> GetAcceptedBooks()
@@ -148,6 +152,40 @@
                 .FirstOrDefault();
 
             return bookDetails;
+        }
+
+        public BookQueryViewModel SearchBooks(string searchTerm, string genre)
+        {
+            var books = this.GetAcceptedBooks();
+
+            if (searchTerm == null && genre == "All")
+            {
+                return null;
+            }
+            else if (searchTerm == null && genre != "All")
+            {
+                return new BookQueryViewModel
+                {
+                    Genres = this.genres.GetGenres(),
+                    Books = books.Where(b => b.Genres.ToLower().Contains(genre.ToLower()))
+                };
+            }
+            else if (searchTerm != null && genre == "All")
+            {
+                return new BookQueryViewModel
+                {
+                    Genres = this.genres.GetGenres(),
+                    Books = books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()))
+                };
+            }
+            else
+            {
+                return new BookQueryViewModel
+                {
+                    Genres = this.genres.GetGenres(),
+                    Books = books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()) && b.Genres.ToLower().Contains(genre.ToLower()))
+                };
+            }
         }
     }
 }

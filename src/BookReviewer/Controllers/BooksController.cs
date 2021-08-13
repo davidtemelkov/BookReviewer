@@ -110,24 +110,12 @@
 
         public IActionResult Search(string searchTerm, string genre)
         {
-            var books = this.books.GetAcceptedBooks();
-
-            if (searchTerm == null && genre == "All")
+            if (this.books.SearchBooks(searchTerm, genre) == null)
             {
                 return Redirect("/Books/All");
             }
-            else if (searchTerm == null && genre != "All")
-            {
-                return View(books.Where(b => b.Genres.ToLower().Contains(genre.ToLower())));
-            }
-            else if(searchTerm != null && genre == "All")
-            {
-                return View(books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower())));
-            }
-            else
-            {
-                return View(books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()) && b.Genres.ToLower().Contains(genre.ToLower())));
-            }
+
+            return View((this.books.SearchBooks(searchTerm, genre)));
         }
     }
 }
