@@ -20,7 +20,7 @@
         {
             var apiKey = this.configuration.GetValue<string>("SendGridKey");
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("esl99@abv.bg", "BookReviewer");
+            var from = new EmailAddress(this.configuration.GetValue<string>("SenderEmail"), "BookReviewer");
             var recipient = new EmailAddress(to);
             var msg = MailHelper.CreateSingleEmail(from, recipient, subject,string.Empty, body);
             await client.SendEmailAsync(msg);

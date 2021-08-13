@@ -100,8 +100,35 @@
             return Redirect($"/Books/Details/{id}");
         }
 
-        public IActionResult All() => View(books.GetAcceptedBooks());
+        public IActionResult All() => View(new BookQueryViewModel
+        {
+            Genres = this.genres.GetGenres(),
+            Books = this.books.GetAcceptedBooks()
+        });
 
         public IActionResult Details(string id) => View(books.BookDetails(id));
+
+        public IActionResult Search(string searchTerm, string genre)
+        {
+            var books = this.books.GetAcceptedBooks();
+
+            if (searchTerm == null && genre == "All")
+            {
+                return Redirect("/Books/All");
+            }
+            else if (searchTerm == null && genre != "All")
+            {
+                return View(books.Where(b => b.Genres.ToLower().Contains(genre.ToLower())));
+            }
+            else if(searchTerm != null && genre == "All")
+            {
+                return View(books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower())));
+            }
+            else
+            {
+                return View(books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()) && b.Genres.ToLower().Contains(genre.ToLower())));
+            }
+        }
     }
 }
+

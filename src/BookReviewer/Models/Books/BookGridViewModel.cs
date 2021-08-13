@@ -13,5 +13,7 @@
         public string CoverUrl { get; init; }
 
         public bool IsAccepted { get; init; }
+
+        public string Genres { get; init; }
     }
 }

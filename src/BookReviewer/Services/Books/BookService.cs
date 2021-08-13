@@ -20,7 +20,7 @@
         {
             var books = this.data
                .Books
-               .OrderByDescending(b => b.DateAdded)
+               .OrderByDescending(b => b.Reviews.Select(r => r.Stars).Average())
                .Where(b => b.IsAccepted)
                .Select(b => new BookGridViewModel
                {
@@ -29,7 +29,8 @@
                    Author = b.Author.Name,
                    AuthorId = b.AuthorId,
                    CoverUrl = b.CoverUrl,
-                   IsAccepted = b.IsAccepted
+                   IsAccepted = b.IsAccepted,
+                   Genres = string.Join("", b.BookGenres.Select(g => g.Genre.Name))
                })
                .ToList();
 
@@ -41,6 +42,7 @@
             var books = this.data
                .Books
                .Where(b => !b.IsAccepted)
+               .OrderByDescending(b => b.DateAdded)
                .Select(b => new BookGridViewModel
                {
                    Id = b.Id,
