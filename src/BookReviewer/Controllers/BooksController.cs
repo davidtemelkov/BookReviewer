@@ -100,19 +100,13 @@
             return Redirect($"/Books/Details/{id}");
         }
 
-        public IActionResult All() => View(new BookQueryViewModel
-        {
-            Genres = this.genres.GetGenres(),
-            Books = this.books.GetAcceptedBooks()
-        });
-
         public IActionResult Details(string id) => View(books.BookDetails(id));
 
         public IActionResult Search(string searchTerm, string genre)
         {
             if (this.books.SearchBooks(searchTerm, genre) == null)
             {
-                return Redirect("/Books/All");
+                return Redirect("/");
             }
 
             return View((this.books.SearchBooks(searchTerm, genre)));
