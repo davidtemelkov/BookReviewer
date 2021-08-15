@@ -13,7 +13,6 @@
         [MaxLength(ListMaxName)]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(ListMaxDescription)]
         public string Description { get; set; }
 

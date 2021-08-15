@@ -1,6 +1,12 @@
-﻿@model IEnumerable<AllListsViewModel>
+﻿@model AllListsViewModel
 
-@if (!Model.Any())
+@using Microsoft.AspNetCore.Identity
+@using BookReviewer.Infrastructure
+
+@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+
+@if (!Model.Lists.Any())
 {
     <div class="d-flex justify-content-center">
         <h4>No lists yet</h4>
@@ -8,17 +14,30 @@
 }
 else
 {
-    foreach (var list in Model)
+    foreach (var list in Model.Lists)
     {
-        <div class="row mb-4" style="border:ridge">
-            <div class="mb-3 mt-3 ml-3">
-                <a asp-controller="Lists" asp-action="Details" asp-route-id="@list.Id" class="display-5 fw-bolder">@list.Name</a>
+        <a asp-controller="Lists" asp-action="Details" asp-route-id="@list.Id">
+            <div class="row mb-4" style="border:ridge">
+                <div class="mb-3 mt-3 ml-3">
+                    <h4>@list.Name</h4>
+                    <span></span>
+                    <h6>@list.Description</h6>
+                </div>
             </div>
-        </div>
+        </a>
     }
 }
 
-<div class="d-flex justify-content-center">
-    <a class="btn btn-dark" asp-controller="Lists" asp-action="Create">Create list</a>
-</div>
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (@User.Id() == Model.UserId)
+    {
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark" asp-controller="Lists" asp-action="Create">Create list</a>
+        </div>
+
+    }
+}
+
+
 

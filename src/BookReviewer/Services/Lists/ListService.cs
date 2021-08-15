@@ -20,13 +20,15 @@
             this.books = books;
         }
 
-        public IEnumerable<AllListsViewModel> GetUserLists(string id)
+        public AllListsViewModel GetUserLists(string id)
         {
-            return this.data.Lists.Where(l => l.UserId == id).Select(l => new AllListsViewModel
+            var listsData = new AllListsViewModel
             {
-                Id = l.Id,
-                Name = l.Name
-            }).ToList();
+                UserId = id,
+                Lists = this.data.Lists.Where(l => l.UserId == id).ToList()
+            };
+
+            return listsData;
 
             //return this.data.Users.Find(id).Lists.Select(l => new AllListsViewModel
             //{

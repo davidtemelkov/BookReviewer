@@ -15,6 +15,7 @@
             MinimumLength = AuthorDateOfBirthChars,
             ErrorMessage = "Format must be dd.mm.yyyy")]
 
+        [Required]
         [Display(Name = "Date of birth")]
         public string DateOfBirth { get; init; }
 

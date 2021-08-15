@@ -29,8 +29,9 @@
         public const int ReviewMinStars = 1;
         public const int ReviewTextMaxValue = 1000;
 
-        public const int ListMaxName = 30;
-        public const int ListMaxDescription = 300;
+        public const int ListMaxName = 70;
+        public const int ListMinName = 3;
+        public const int ListMaxDescription = 1000;
 
         public const string UserDefaultProfilePicture = "https://www.birchcommunityservices.org/wp-content/uploads/2020/04/no-profile-picture-icon-10.jpg";
     }

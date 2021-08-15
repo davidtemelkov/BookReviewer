@@ -5,7 +5,7 @@
 
     public interface IListService
     {
-        IEnumerable<AllListsViewModel> GetUserLists(string id);
+        AllListsViewModel GetUserLists(string id);
 
         int Create(string userId, ListFormModel list);
 

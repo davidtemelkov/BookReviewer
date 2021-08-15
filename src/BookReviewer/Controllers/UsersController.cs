@@ -20,6 +20,11 @@
         [HttpPost]
         public IActionResult ChangeProfilePicture(string id, ChangeProfilePictureFormModel profilePic)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(profilePic);
+            }
+
             this.users.ChangeProfilePicture(id, profilePic);
 
             return Redirect($"/Users/Profile/{id}");

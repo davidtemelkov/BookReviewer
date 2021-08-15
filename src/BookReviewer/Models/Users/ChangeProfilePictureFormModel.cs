@@ -1,9 +1,11 @@
 ﻿namespace BookReviewer.Models.Users
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ChangeProfilePictureFormModel
     {
-        public string Id { get; init; }
-
+        [Required]
+        [Url]
         public string PictureUrl { get; init; }
     }
 }

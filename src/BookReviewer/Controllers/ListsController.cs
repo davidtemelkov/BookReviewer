@@ -30,6 +30,11 @@
         [HttpPost]
         public IActionResult Create(ListFormModel form)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(form);
+            }
+
             var createdListId = this.lists.Create(User.Id(), form);
 
             return Redirect($"/Lists/Edit/{createdListId}");

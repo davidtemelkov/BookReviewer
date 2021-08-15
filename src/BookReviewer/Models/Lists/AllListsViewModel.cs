@@ -1,9 +1,12 @@
 ﻿namespace BookReviewer.Models.Lists
 {
+    using BookReviewer.Data.Models;
+    using System.Collections.Generic;
+
     public class AllListsViewModel
     {
-       public int Id { get; init; }
+       public string UserId { get; init; }
 
-        public string Name { get; set; }
+       public IEnumerable<List> Lists { get; init; }
     }
 }
