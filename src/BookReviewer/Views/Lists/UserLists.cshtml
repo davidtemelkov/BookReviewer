@@ -1,2 +1,24 @@
-﻿
-<a class="btn btn-dark" asp-controller="Lists" asp-action="Create">Create list</a>
+﻿@model IEnumerable<AllListsViewModel>
+
+@if (!Model.Any())
+{
+    <div class="d-flex justify-content-center">
+        <h4>No lists yet</h4>
+    </div>
+}
+else
+{
+    foreach (var list in Model)
+    {
+        <div class="row mb-4" style="border:ridge">
+            <div class="mb-3 mt-3 ml-3">
+                <a asp-controller="Lists" asp-action="Details" asp-route-id="@list.Id" class="display-5 fw-bolder">@list.Name</a>
+            </div>
+        </div>
+    }
+}
+
+<div class="d-flex justify-content-center">
+    <a class="btn btn-dark" asp-controller="Lists" asp-action="Create">Create list</a>
+</div>
+

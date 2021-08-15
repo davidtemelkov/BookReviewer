@@ -5,6 +5,7 @@
     using BookReviewer.Models.Lists;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Lists;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
 
@@ -20,38 +21,55 @@
             this.books = books;
         }
 
-        public IActionResult UserLists(string id)
-        {
-            return View();
-        }
+        public IActionResult UserLists(string id) => View(this.lists.GetUserLists(id));
 
+        [Authorize]
         public IActionResult Create() => View();
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(ListFormModel form)
         {
+            var createdListId = this.lists.Create(User.Id(), form);
 
-            return RedirectToAction("AddBooks", "Lists", form);
+            return Redirect($"/Lists/Edit/{createdListId}");
         }
 
-        public IActionResult AddBooks(ListFormModel form)
+        public IActionResult Details(string id)
         {
-            return View(new AddBooksViewModel
-            {
-                Name = form.Name,
-                Description = form.Description,
-                AvailableBooks = this.books.GetAcceptedBooks()
-            });
+            var details = this.lists.GetListDetails(id);
+
+            return View(details);
         }
 
-        public IActionResult AddToList(AddBooksViewModel list)
+        [Authorize]
+        public IActionResult Edit(string id)
         {
-            return RedirectToAction("AddBooks", "Lists", list);
+            var details = this.lists.GetListDetails(id);
+
+            return View(details);
         }
 
-        public IActionResult RemoveFromList(AddBooksViewModel list)
+        [Authorize]
+        public IActionResult AddToList(string id)
         {
-            return RedirectToAction("AddBooks", "Lists", list);
+            var ids = id.Split("%2F");
+            var bookId = ids[0];
+            var listId = ids[1];
+
+            this.lists.AddBook(bookId, listId);
+
+            return Redirect($"/Lists/Details/{listId}");
+        }
+
+        [Authorize]
+        public IActionResult RemoveFromList(string id)
+        {
+            var ids = id.Split("%2F");
+            var bookId = ids[0];
+            var listId = ids[1];
+
+            return Redirect($"/Lists/Details/{listId}");
         }
     }
 }

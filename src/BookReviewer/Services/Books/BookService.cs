@@ -34,7 +34,7 @@
                    AuthorId = b.AuthorId,
                    CoverUrl = b.CoverUrl,
                    IsAccepted = b.IsAccepted,
-                   Genres = string.Join("", b.BookGenres.Select(g => g.Genre.Name))
+                   Genres = string.Join(",", b.BookGenres.Select(g => g.Genre.Name))
                })
                .ToList();
 
@@ -167,7 +167,7 @@
                 return new BookQueryViewModel
                 {
                     Genres = this.genres.GetGenres(),
-                    Books = books.Where(b => b.Genres.ToLower().Contains(genre.ToLower()))
+                    Books = books.Where(b => b.Genres.ToLower().Split(",").Any(g => g == genre.ToLower()))
                 };
             }
             else if (searchTerm != null && genre == "All")
@@ -183,7 +183,7 @@
                 return new BookQueryViewModel
                 {
                     Genres = this.genres.GetGenres(),
-                    Books = books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()) && b.Genres.ToLower().Contains(genre.ToLower()))
+                    Books = books.Where(b => b.Title.ToLower().Contains(searchTerm.ToLower()) && b.Genres.ToLower().Split(",").Any(g => g == genre.ToLower()))
                 };
             }
         }

@@ -1,4 +1,4 @@
-﻿@model AddBooksViewModel
+﻿@model ListDetailsViewModel
 
 <div class="pb-2">
     <h5>List Title:</h5>
@@ -8,11 +8,11 @@
     <h5>List Description:</h5>
     <h4>@Model.Description</h4>
 </div>
-<h4 >Added books:</h4>
+<h4>Added books:</h4>
 <div class="row pt-4">
     @if (Model.AddedBooks.Any())
     {
-        @foreach (var book in Model.AvailableBooks)
+        @foreach (var book in Model.AddedBooks)
         {
             <div class="col-md-6 col-lg-2 mb-5">
                 <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
@@ -27,7 +27,7 @@
                     </div>
                 </a>
                 <p class="text-center">
-                    <a class="btn btn-success" asp-controller="Lists" asp-action="RemoveFromList" asp-route-id="@book.Id">Add</a>
+                    <a class="btn btn-danger" asp-controller="Lists" asp-action="RemoveFromList" asp-route-id="@book.Id/@Model.Id">Remove</a>
                 </p>
             </div>
         }
@@ -36,6 +36,7 @@
     {
         <p>No books added yet.</p>
     }
+
 </div>
 <h4 class="pt-4">Available books:</h4>
 <div class="row pt-4">
@@ -54,9 +55,8 @@
                 </div>
             </a>
             <p class="text-center">
-                <a class="btn btn-success" asp-controller="Lists" asp-action="AddToList" asp-route-id="@book.Id">Add</a>
+                <a class="btn btn-success" asp-controller="Lists" asp-action="AddToList" asp-route-id="@book.Id/@Model.Id">Add</a>
             </p>
         </div>
     }
 </div>
-
