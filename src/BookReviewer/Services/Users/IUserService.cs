@@ -5,5 +5,7 @@
     public interface IUserService
     {
         UserProfileViewModel Profile(string id);
+
+        void ChangeProfilePicture(string id, ChangeProfilePictureFormModel picture);
     }
 }

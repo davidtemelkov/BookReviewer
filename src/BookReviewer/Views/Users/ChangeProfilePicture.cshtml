@@ -1,0 +1,14 @@
+﻿@model ChangeProfilePictureFormModel
+
+<div class="d-flex justify-content-center">
+    <h4>Change profile picture</h4>
+</div>
+
+<form method="post" class="mt-4">
+    <div class="form-group">
+        <label asp-for="PictureUrl"></label>
+        <input asp-for="PictureUrl" class="form-control">
+        <span asp-validation-for="PictureUrl" class="small text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-dark">Submit</button>
+</form>

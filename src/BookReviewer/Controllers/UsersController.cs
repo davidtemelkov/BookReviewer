@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Controllers
 {
+    using BookReviewer.Models.Users;
     using BookReviewer.Services.Users;
     using Microsoft.AspNetCore.Mvc;
 
@@ -13,5 +14,15 @@
         }
 
         public IActionResult Profile(string id) => View(users.Profile(id));
+
+        public IActionResult ChangeProfilePicture(string id) => View();
+
+        [HttpPost]
+        public IActionResult ChangeProfilePicture(string id, ChangeProfilePictureFormModel profilePic)
+        {
+            this.users.ChangeProfilePicture(id, profilePic);
+
+            return Redirect($"/Users/Profile/{id}");
+        }
     }
 }

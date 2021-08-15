@@ -25,5 +25,11 @@
 
             return profile;
         }
+
+        public void ChangeProfilePicture(string id, ChangeProfilePictureFormModel picture)
+        {
+            this.data.Users.Find(id).ProfilePicture = picture.PictureUrl;
+            this.data.SaveChanges();
+        }
     }
 }

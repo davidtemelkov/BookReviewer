@@ -12,7 +12,7 @@
                 @if (User.Id() == Model.Id)
                 {
                     <div class="text-center">
-                        <p class="mt-3">Change profile picture</p>
+                        <a asp-controller="Users" asp-action="ChangeProfilePicture" asp-route-id="@Model.Id" class="mt-3">Change profile picture</a>
                     </div>
                 }
 
