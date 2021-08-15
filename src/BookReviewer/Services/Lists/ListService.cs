@@ -5,7 +5,7 @@
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Lists;
     using BookReviewer.Services.Books;
-    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
     using System.Linq;
 
     public class ListService : IListService
@@ -22,19 +22,13 @@
 
         public AllListsViewModel GetUserLists(string id)
         {
-            var listsData = new AllListsViewModel
+            var listData = new AllListsViewModel
             {
                 UserId = id,
-                Lists = this.data.Lists.Where(l => l.UserId == id).ToList()
+                Lists = this.data.Users.Include(x => x.Lists).FirstOrDefault(u => u.Id == id).Lists.ToList()
             };
 
-            return listsData;
-
-            //return this.data.Users.Find(id).Lists.Select(l => new AllListsViewModel
-            //{
-            //    Id = l.Id,
-            //    Name = l.Name
-            //}).ToList();
+            return listData;
         }
 
         public int Create(string userId, ListFormModel list)
@@ -55,38 +49,22 @@
 
         public ListDetailsViewModel GetListDetails(string id)
         {
-            var list = this.data.Lists.Where(l => l.Id == int.Parse(id));
-
-            var addedBooks2 = this.data.BookLists.Where(l => l.ListId == int.Parse(id)).Select(b => b.Book).Select(b => new BookGridViewModel
-            {
-                Id = b.Id,
-                Title = b.Title,
-                Author = b.Author.Name,
-                CoverUrl = b.CoverUrl
-            })
+            var list = this.data.Lists.Where(l => l.Id == int.Parse(id))
                 .ToList();
 
-            //var addedBooks = list.FirstOrDefault().BookLists
-            //    .Select(b => b.Book)
-            //    .Select(b => new BookGridViewModel
-            //    {
-            //        Id = b.Id,
-            //        Title = b.Title,
-            //        Author = b.Author.Name,
-            //        CoverUrl = b.CoverUrl
-            //    })
-            //    .ToList();
-
-            var availableBooks = this.data.Books.Where(b => b.IsAccepted)
-                .Select(b => new BookGridViewModel
+            var addedBooks = this.data.BookLists.Where(l => l.ListId == int.Parse(id))
+                .Select(b => b.Book).Select(b => new BookGridViewModel
                 {
                     Id = b.Id,
                     Title = b.Title,
                     Author = b.Author.Name,
                     CoverUrl = b.CoverUrl
-                });
+                })
+                .ToList();
 
-          
+            var availableBooks = this.books.GetAcceptedBooks()
+                .Where(b => addedBooks.FirstOrDefault(x => x.Id == b.Id) == null)
+                .ToList();
 
             var bookDetails = list.Select(l => new ListDetailsViewModel
             {
@@ -94,8 +72,8 @@
                 UserId = l.UserId,
                 Name = l.Name,
                 Description = l.Description,
-                AddedBooks = addedBooks2,
-                AvailableBooks = availableBooks.ToList()
+                AddedBooks = addedBooks,
+                AvailableBooks = availableBooks
             })
                 .FirstOrDefault();
 
@@ -105,6 +83,13 @@
         public void AddBook(string bookId, string listId)
         {
             this.data.BookLists.Add(new BookList { BookId = int.Parse(bookId), ListId = int.Parse(listId) });
+            this.data.SaveChanges();
+        }
+
+        public void RemoveBook(string bookId, string listId)
+        {
+            var book = this.data.BookLists.FirstOrDefault(b => b.BookId == int.Parse(bookId) && b.ListId == int.Parse(listId));
+            this.data.BookLists.Remove(book);
             this.data.SaveChanges();
         }
     }

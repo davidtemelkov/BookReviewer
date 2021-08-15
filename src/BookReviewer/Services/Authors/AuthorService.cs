@@ -77,7 +77,8 @@
 
         public AuthorDetailsViewModel Details(string id)
         {
-            var author = this.data.Authors.Where(a => a.Id == int.Parse(id));
+            var author = this.data.Authors.Where(a => a.Id == int.Parse(id))
+                .ToList();
 
             var authorDetails = author.Select(a => new AuthorDetailsViewModel
             {
@@ -86,12 +87,7 @@
                 DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
                 Details = a.Details,
                 PictureUrl = a.PictureUrl,
-                Books = this.data.Books.Where(b => b.AuthorId == int.Parse(id) && b.IsAccepted).Select(b => new BookGridViewModel {
-                    Id = b.Id,
-                    Title = b.Title,
-                    Author = b.Author.Name,
-                    CoverUrl = b.CoverUrl
-                }).ToList()
+                Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id))
             })
                 .FirstOrDefault();
 

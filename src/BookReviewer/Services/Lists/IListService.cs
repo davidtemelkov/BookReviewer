@@ -12,5 +12,7 @@
         ListDetailsViewModel GetListDetails(string id);
 
         void AddBook(string bookId, string listId);
+
+        void RemoveBook(string bookId, string listId);
     }
 }

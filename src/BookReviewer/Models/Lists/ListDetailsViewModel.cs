@@ -16,6 +16,6 @@
 
         public IEnumerable<BookGridViewModel> AddedBooks { get; init; } 
 
-        public IEnumerable<BookGridViewModel> AvailableBooks { get; init; } 
+        public IEnumerable<BookGridViewModel> AvailableBooks { get; set; } 
     }
 }

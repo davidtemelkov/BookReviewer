@@ -64,7 +64,7 @@
 
             this.lists.AddBook(bookId, listId);
 
-            return Redirect($"/Lists/Details/{listId}");
+            return Redirect($"/Lists/Edit/{listId}");
         }
 
         [Authorize]
@@ -74,7 +74,9 @@
             var bookId = ids[0];
             var listId = ids[1];
 
-            return Redirect($"/Lists/Details/{listId}");
+            this.lists.RemoveBook(bookId, listId);
+
+            return Redirect($"/Lists/Edit/{listId}");
         }
     }
 }
