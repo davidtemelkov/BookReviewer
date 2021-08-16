@@ -16,16 +16,13 @@
             this.data = data;
         }
 
-        public void Create(int stars,
-            string text,
-            string id,
-            string userId)
+        public void Create(string bookId, string userId, ReviewFormModel review)
         {
             var reviewData = new Review
             {
-                Stars = stars,
-                Text = text,
-                BookId = int.Parse(id),
+                Stars = review.Stars,
+                Text = review.Text,
+                BookId = int.Parse(bookId),
                 UserId = userId
             };
 
@@ -78,7 +75,7 @@
             return reviews;
         }
 
-        public bool OwnsReview(string userId, string reviewId)
+        public bool UserOwnsReview(string userId, string reviewId)
             => userId == this.data.Reviews.Find(int.Parse(reviewId)).UserId;
     }
 }

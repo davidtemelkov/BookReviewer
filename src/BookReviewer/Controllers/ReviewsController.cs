@@ -30,10 +30,7 @@
                 return View(review);
             }
 
-            this.reviews.Create(review.Stars,
-                review.Text,
-                id,
-                User.Id());
+            this.reviews.Create(id,User.Id(), review);
 
             return Redirect($"/Books/Details/{id}");
         }
@@ -41,7 +38,7 @@
         [Authorize]
         public IActionResult Edit(string id)
         {
-            if (!this.reviews.OwnsReview(User.Id(), id) && !User.IsAdmin())
+            if (!this.reviews.UserOwnsReview(User.Id(), id) && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -63,7 +60,7 @@
         [Authorize]
         public IActionResult Delete(string id)
         {
-            if (!this.reviews.OwnsReview(User.Id(), id) && !User.IsAdmin())
+            if (!this.reviews.UserOwnsReview(User.Id(), id) && !User.IsAdmin())
             {
                 return Unauthorized();
             }

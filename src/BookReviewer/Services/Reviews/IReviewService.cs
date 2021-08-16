@@ -5,10 +5,7 @@
 
     public interface IReviewService
     {
-        void Create(int stars,
-            string text,
-            string id,
-            string userId);
+        void Create(string bookId, string userId, ReviewFormModel review);
 
         void Edit(string id, ReviewFormModel editedReview);
 
@@ -18,6 +15,6 @@
 
         AllReviewsViewModel GetUserReviews(string id);
 
-        bool OwnsReview(string userId, string reviewId);
+        bool UserOwnsReview(string userId, string reviewId);
     }
 }
