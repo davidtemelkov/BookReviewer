@@ -23,15 +23,6 @@
             var user = this.data.Users.FirstOrDefault(u => u.Id == id);
 
             var profile = this.mapper.Map<UserProfileViewModel>(user);
-            profile.Id = id;
-
-            //var profile = new UserProfileViewModel
-            //{
-            //    Id = id,
-            //    Username = user.UserName,
-            //    ProfilePictureUrl = user.ProfilePicture,
-            //    AuthorId = user.AuthorId
-            //};
 
             return profile;
         }

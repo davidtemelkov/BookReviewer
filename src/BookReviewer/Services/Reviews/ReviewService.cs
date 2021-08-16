@@ -26,14 +26,6 @@
             reviewData.BookId = int.Parse(bookId);
             reviewData.UserId = userId;
 
-            //var reviewData = new Review
-            //{
-            //    Stars = review.Stars,
-            //    Text = review.Text,
-            //    BookId = int.Parse(bookId),
-            //    UserId = userId
-            //};
-
             this.data.Reviews.Add(reviewData);
             this.data.SaveChanges();
         }
@@ -53,12 +45,6 @@
             var review = this.data.Reviews.Find(int.Parse(id));
 
             var editReviewForm = this.mapper.Map<ReviewFormModel>(review);
-
-            //var editReviewForm = new ReviewFormModel
-            //{
-            //    Stars = review.Stars,
-            //    Text = review.Text
-            //};
 
             return editReviewForm;
         }

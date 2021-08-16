@@ -41,13 +41,6 @@
             var listData = this.mapper.Map<List>(list);
             listData.UserId = userId;
 
-            //var listData = new List
-            //{
-            //    Name = list.Name,
-            //    Description = list.Description,
-            //    UserId = userId
-            //};
-
             this.data.Lists.Add(listData);
             this.data.SaveChanges();
             this.data.Entry(listData).GetDatabaseValues();
@@ -72,17 +65,6 @@
 
             bookDetails.AddedBooks = addedBooks;
             bookDetails.AvailableBooks = availableBooks;
-
-            //var bookDetails = list.Select(l => new ListDetailsViewModel
-            //{
-            //    Id = l.Id,
-            //    UserId = l.UserId,
-            //    Name = l.Name,
-            //    Description = l.Description,
-            //    AddedBooks = addedBooks,
-            //    AvailableBooks = availableBooks
-            //})
-            //    .FirstOrDefault();
 
             return bookDetails;
         }

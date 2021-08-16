@@ -70,20 +70,6 @@
 
             authorData.Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id));
 
-            //var author = this.data.Authors.Where(a => a.Id == int.Parse(id))
-            //    .ToList();
-
-            //var authorDetails = author.Select(a => new AuthorDetailsViewModel
-            //{
-            //    Id = int.Parse(id),
-            //    Name = a.Name,
-            //    DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
-            //    Details = a.Details,
-            //    PictureUrl = a.PictureUrl,
-            //    Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id))
-            //})
-            //    .FirstOrDefault();
-
             return authorData;
         }
 

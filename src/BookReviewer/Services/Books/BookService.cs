@@ -33,23 +33,6 @@
                .ProjectTo<BookGridViewModel>(this.mapper.ConfigurationProvider)
                .ToList();
 
-               
-            //var books = this.data
-            //   .Books
-            //   .OrderByDescending(b => b.Reviews.Select(r => r.Stars).Average())
-            //   .Where(b => b.IsAccepted)
-            //   .Select(b => new BookGridViewModel
-            //   {
-            //       Id = b.Id,
-            //       Title = b.Title,
-            //       Author = b.Author.Name,
-            //       AuthorId = b.AuthorId,
-            //       CoverUrl = b.CoverUrl,
-            //       IsAccepted = b.IsAccepted,
-            //       Genres = string.Join(",", b.BookGenres.Select(g => g.Genre.Name))
-            //   })
-            //   .ToList();
-
             return books;
         }
 
@@ -67,17 +50,6 @@
 
         public void AdminCreate(BookFormModel book)
         {
-            //var bookData = new Book
-            //{
-            //    Title = book.Title,
-            //    Author = this.data.Authors.FirstOrDefault(a => a.Name == book.Author),
-            //    CoverUrl = book.CoverUrl,
-            //    Description = book.Description,
-            //    Pages = book.Pages,
-            //    YearPublished = book.YearPublished,
-            //    IsAccepted = true
-            //};
-
             var bookData = this.mapper.Map<Book>(book);
             bookData.Author = this.data.Authors.FirstOrDefault(a => a.Name == book.Author);
 
@@ -92,16 +64,6 @@
 
         public void UserCreate(User currentUser, BookFormModel book)
         {
-            //var bookData = new Book
-            //{
-            //    Title = book.Title,
-            //    Author = this.data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
-            //    CoverUrl = book.CoverUrl,
-            //    Description = book.Description,
-            //    Pages = book.Pages,
-            //    YearPublished = book.YearPublished
-            //};
-
             var bookData = this.mapper.Map<Book>(book);
             bookData.Author = this.data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId);
 
