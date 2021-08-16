@@ -8,7 +8,7 @@
     using BookReviewer.Services.Genres;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
+
     using static AdminConstants;
 
     [Area(AreaName)]
@@ -41,10 +41,7 @@
                 return View(author);
             }
 
-            this.authors.AdminCreate(author.Name,
-                author.DateOfBirth,
-                author.Details,
-                author.PictureUrl);
+            this.authors.AdminCreate(author);
 
             return Redirect("/");
         }
@@ -66,13 +63,7 @@
                 return View(book);
             }
 
-            this.books.AdminCreate(book.Title,
-                book.Author,
-                book.CoverUrl,
-                book.Description,
-                book.Pages,
-                book.YearPublished,
-                book.BookGenres);
+            this.books.AdminCreate(book);
 
             return Redirect("/");
         }

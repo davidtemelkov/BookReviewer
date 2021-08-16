@@ -1,13 +1,15 @@
 ﻿@model AllReviewsViewModel
 
 @using Microsoft.AspNetCore.Identity
-@using BookReviewer.Infrastructure 
+@using BookReviewer.Infrastructure
 
 @inject UserManager<User> UserManager
 
 @if (!Model.Reviews.Any())
 {
-    <h4>No reviews yet</h4>
+    <div class="d-flex justify-content-center pt-5 pb-5">
+        <h2>No reviews yet!</h2>
+    </div>
 }
 else
 {

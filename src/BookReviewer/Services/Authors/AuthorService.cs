@@ -3,8 +3,6 @@
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
-    using BookReviewer.Models.Books;
-    using BookReviewer.Models.Users;
     using BookReviewer.Services.Books;
     using System;
     using System.Collections.Generic;
@@ -23,35 +21,28 @@
             this.books = books;
         }
 
-        public void AdminCreate(string name,
-            string dateOfBirth,
-            string details,
-            string pictureUrl)
+        public void AdminCreate(AuthorFormModel author)
         {
             var authorData = new Author
             {
-                Name = name,
-                DateOfBirth = DateTime.ParseExact(dateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = details,
-                PictureUrl = pictureUrl
+                Name = author.Name,
+                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                Details = author.Details,
+                PictureUrl = author.PictureUrl
             };
 
             this.data.Authors.Add(authorData);
             this.data.SaveChanges();
         }
 
-        public void UserCreate(string name,
-          string dateOfBirth,
-          string details,
-          string pictureUrl,
-          string userId)
+        public void UserCreate(AuthorFormModel author, string userId)
         {
             var authorData = new Author
             {
-                Name = name,
-                DateOfBirth = DateTime.ParseExact(dateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = details,
-                PictureUrl = pictureUrl
+                Name = author.Name,
+                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                Details = author.Details,
+                PictureUrl = author.PictureUrl
             };
 
             this.data.Authors.Add(authorData);
@@ -103,7 +94,6 @@
 
         public bool IsCurrentAuthor(string userId, string authorId) 
             => this.data.Users.Find(userId).AuthorId == int.Parse(authorId);
-        
 
         public IEnumerable<string> GetAuthors()
         {

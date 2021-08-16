@@ -61,26 +61,20 @@
             return books;
         }
 
-        public void AdminCreate(string title,
-            string author,
-            string coverUrl,
-            string description,
-            int pages,
-            string yearPublished,
-            ICollection<string> bookGenres)
+        public void AdminCreate(BookFormModel book)
         {
             var bookData = new Book
             {
-                Title = title,
-                Author = data.Authors.FirstOrDefault(a => a.Name == author),
-                CoverUrl = coverUrl,
-                Description = description,
-                Pages = pages,
-                YearPublished = yearPublished,
+                Title = book.Title,
+                Author = this.data.Authors.FirstOrDefault(a => a.Name == book.Author),
+                CoverUrl = book.CoverUrl,
+                Description = book.Description,
+                Pages = book.Pages,
+                YearPublished = book.YearPublished,
                 IsAccepted = true
             };
 
-            foreach (var genre in bookGenres)
+            foreach (var genre in book.BookGenres)
             {
                 bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = this.data.Genres.FirstOrDefault(g => g.Name == genre) });
             }
@@ -89,25 +83,19 @@
             this.data.SaveChanges();
         }
 
-        public void UserCreate(string title,
-            User currentUser,
-            string coverUrl,
-            string description,
-            int pages,
-            string yearPublished,
-            ICollection<string> bookGenres)
+        public void UserCreate(User currentUser, BookFormModel book)
         {
             var bookData = new Book
             {
-                Title = title,
-                Author = data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
-                CoverUrl = coverUrl,
-                Description = description,
-                Pages = pages,
-                YearPublished = yearPublished
+                Title = book.Title,
+                Author = this.data.Authors.FirstOrDefault(a => a.Id == currentUser.AuthorId),
+                CoverUrl = book.CoverUrl,
+                Description = book.Description,
+                Pages = book.Pages,
+                YearPublished = book.YearPublished
             };
 
-            foreach (var genre in bookGenres)
+            foreach (var genre in book.BookGenres)
             {
                 bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
             }

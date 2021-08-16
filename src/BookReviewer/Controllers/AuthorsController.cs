@@ -28,11 +28,7 @@
                 return View(author);
             }
 
-            this.authors.UserCreate(author.Name,
-                author.DateOfBirth,
-                author.Details,
-                author.PictureUrl,
-                User.Id());
+            this.authors.UserCreate(author, User.Id());
 
             return RedirectToAction("Index", "Home");
         }

@@ -56,14 +56,7 @@
             var currentUser = this.data.Users
                 .FirstOrDefault(u => u.Id == User.Id());
 
-            this.books.UserCreate(book.Title,
-                currentUser,
-                book.CoverUrl,
-                book.Description,
-                book.Pages,
-                book.YearPublished,
-                book.BookGenres
-                );
+            this.books.UserCreate(currentUser, book);
 
             return RedirectToAction("Index", "Home");
         }

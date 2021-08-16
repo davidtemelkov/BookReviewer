@@ -10,21 +10,9 @@
 
         IEnumerable<BookGridViewModel> GetNonAcceptedBooks();
 
-        void AdminCreate(string title,
-            string author,
-            string coverUrl,
-            string description,
-            int pages,
-            string yearPublished,
-            ICollection<string> bookGenres);
+        void AdminCreate(BookFormModel book);
 
-        void UserCreate(string title,
-            User currentUser,
-            string coverUrl,
-            string description,
-            int pages,
-            string yearPublished,
-            ICollection<string> bookGenres);
+        void UserCreate(User currentUser, BookFormModel book);
 
         void Edit(string id, BookFormModel editedBook);
 
