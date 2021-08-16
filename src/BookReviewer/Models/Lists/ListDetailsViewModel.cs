@@ -14,7 +14,7 @@
 
         public string Description { get; init; }
 
-        public IEnumerable<BookGridViewModel> AddedBooks { get; init; } 
+        public IEnumerable<BookGridViewModel> AddedBooks { get; set; } 
 
         public IEnumerable<BookGridViewModel> AvailableBooks { get; set; } 
     }

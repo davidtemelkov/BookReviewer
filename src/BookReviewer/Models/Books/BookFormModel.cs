@@ -13,7 +13,6 @@
             ErrorMessage = "The title of the book must be between {2} and {1} characters!")]
         public string Title { get; init; }
 
-        [Required]
         [StringLength(AuthorMaxName,
             MinimumLength = AuthorMinName)]
         public string Author { get; init; }

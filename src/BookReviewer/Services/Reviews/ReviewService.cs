@@ -1,5 +1,6 @@
 ﻿namespace BookReviewer.Services.Reviews
 {
+    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Reviews;
@@ -10,21 +11,28 @@
     public class ReviewService : IReviewService
     {
         private readonly BookReviewerDbContext data;
+        private readonly IMapper mapper;
 
-        public ReviewService(BookReviewerDbContext data)
+        public ReviewService(BookReviewerDbContext data,
+            IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper;
         }
 
         public void Create(string bookId, string userId, ReviewFormModel review)
         {
-            var reviewData = new Review
-            {
-                Stars = review.Stars,
-                Text = review.Text,
-                BookId = int.Parse(bookId),
-                UserId = userId
-            };
+            var reviewData = this.mapper.Map<Review>(review);
+            reviewData.BookId = int.Parse(bookId);
+            reviewData.UserId = userId;
+
+            //var reviewData = new Review
+            //{
+            //    Stars = review.Stars,
+            //    Text = review.Text,
+            //    BookId = int.Parse(bookId),
+            //    UserId = userId
+            //};
 
             this.data.Reviews.Add(reviewData);
             this.data.SaveChanges();
@@ -44,11 +52,13 @@
         {
             var review = this.data.Reviews.Find(int.Parse(id));
 
-            var editReviewForm = new ReviewFormModel
-            {
-                Stars = review.Stars,
-                Text = review.Text
-            };
+            var editReviewForm = this.mapper.Map<ReviewFormModel>(review);
+
+            //var editReviewForm = new ReviewFormModel
+            //{
+            //    Stars = review.Stars,
+            //    Text = review.Text
+            //};
 
             return editReviewForm;
         }

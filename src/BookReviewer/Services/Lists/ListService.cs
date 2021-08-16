@@ -1,5 +1,7 @@
 ﻿namespace BookReviewer.Services.Lists
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Books;
@@ -12,12 +14,15 @@
     {
         private readonly BookReviewerDbContext data;
         private readonly IBookService books;
+        private readonly IMapper mapper;
 
         public ListService(BookReviewerDbContext data,
-            IBookService books)
+            IBookService books,
+            IMapper mapper)
         {
             this.data = data;
             this.books = books;
+            this.mapper = mapper;
         }
 
         public AllListsViewModel GetUserLists(string id)
@@ -33,12 +38,15 @@
 
         public int Create(string userId, ListFormModel list)
         {
-            var listData = new List
-            {
-                Name = list.Name,
-                Description = list.Description,
-                UserId = userId
-            };
+            var listData = this.mapper.Map<List>(list);
+            listData.UserId = userId;
+
+            //var listData = new List
+            //{
+            //    Name = list.Name,
+            //    Description = list.Description,
+            //    UserId = userId
+            //};
 
             this.data.Lists.Add(listData);
             this.data.SaveChanges();
@@ -49,33 +57,32 @@
 
         public ListDetailsViewModel GetListDetails(string id)
         {
-            var list = this.data.Lists.Where(l => l.Id == int.Parse(id))
-                .ToList();
+            var list = this.data.Lists.Where(l => l.Id == int.Parse(id));
+
+            var bookDetails = list.ProjectTo<ListDetailsViewModel>(this.mapper.ConfigurationProvider)
+                .FirstOrDefault();
 
             var addedBooks = this.data.BookLists.Where(l => l.ListId == int.Parse(id))
-                .Select(b => b.Book).Select(b => new BookGridViewModel
-                {
-                    Id = b.Id,
-                    Title = b.Title,
-                    Author = b.Author.Name,
-                    CoverUrl = b.CoverUrl
-                })
+                .Select(b => b.Book).ProjectTo<BookGridViewModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
             var availableBooks = this.books.GetAcceptedBooks()
-                .Where(b => addedBooks.FirstOrDefault(x => x.Id == b.Id) == null)
-                .ToList();
+               .Where(b => addedBooks.FirstOrDefault(x => x.Id == b.Id) == null)
+               .ToList();
 
-            var bookDetails = list.Select(l => new ListDetailsViewModel
-            {
-                Id = l.Id,
-                UserId = l.UserId,
-                Name = l.Name,
-                Description = l.Description,
-                AddedBooks = addedBooks,
-                AvailableBooks = availableBooks
-            })
-                .FirstOrDefault();
+            bookDetails.AddedBooks = addedBooks;
+            bookDetails.AvailableBooks = availableBooks;
+
+            //var bookDetails = list.Select(l => new ListDetailsViewModel
+            //{
+            //    Id = l.Id,
+            //    UserId = l.UserId,
+            //    Name = l.Name,
+            //    Description = l.Description,
+            //    AddedBooks = addedBooks,
+            //    AvailableBooks = availableBooks
+            //})
+            //    .FirstOrDefault();
 
             return bookDetails;
         }

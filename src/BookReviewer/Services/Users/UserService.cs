@@ -1,35 +1,48 @@
 ﻿namespace BookReviewer.Services.Users
 {
+    using AutoMapper;
     using BookReviewer.Data;
+    using BookReviewer.Data.Models;
     using BookReviewer.Models.Users;
     using System.Linq;
 
     public class UserService : IUserService
     {
         private readonly BookReviewerDbContext data;
+        private readonly IMapper mapper;
 
-        public UserService(BookReviewerDbContext data)
+        public UserService(BookReviewerDbContext data,
+            IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper;
         }
 
         public UserProfileViewModel Profile(string id)
         {
-            var profile = new UserProfileViewModel
-            {
-                Id = id,
-                Username = this.data.Users.FirstOrDefault(u => u.Id == id).UserName,
-                ProfilePictureUrl = this.data.Users.FirstOrDefault(u => u.Id == id).ProfilePicture,
-                AuthorId = this.data.Users.FirstOrDefault(u => u.Id == id).AuthorId
-            };
+            var user = this.data.Users.FirstOrDefault(u => u.Id == id);
+
+            var profile = this.mapper.Map<UserProfileViewModel>(user);
+            profile.Id = id;
+
+            //var profile = new UserProfileViewModel
+            //{
+            //    Id = id,
+            //    Username = user.UserName,
+            //    ProfilePictureUrl = user.ProfilePicture,
+            //    AuthorId = user.AuthorId
+            //};
 
             return profile;
         }
 
         public void ChangeProfilePicture(string id, ChangeProfilePictureFormModel picture)
         {
-            this.data.Users.Find(id).ProfilePicture = picture.PictureUrl;
+            this.GetUserById(id).ProfilePicture = picture.PictureUrl;
             this.data.SaveChanges();
         }
+
+        public User GetUserById(string id) 
+            => this.data.Users.FirstOrDefault(u => u.Id == id);
     }
 }

@@ -52,6 +52,7 @@
         public IActionResult Edit(string id, ReviewFormModel editedReview)
         {
             var currentUserId = User.Id();
+
             this.reviews.Edit(id, editedReview);
 
             return Redirect($"/Reviews/UserReviews/{currentUserId}");

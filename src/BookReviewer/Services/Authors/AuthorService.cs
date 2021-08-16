@@ -1,9 +1,12 @@
 ﻿namespace BookReviewer.Services.Authors
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
     using BookReviewer.Services.Books;
+    using BookReviewer.Services.Users;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -13,23 +16,23 @@
     {
         private readonly BookReviewerDbContext data;
         private readonly IBookService books;
+        private readonly IUserService users;
+        private readonly IMapper mapper;
 
         public AuthorService(BookReviewerDbContext data,
-            IBookService books)
+            IBookService books,
+            IUserService users,
+            IMapper mapper)
         {
             this.data = data;
             this.books = books;
+            this.users = users;
+            this.mapper = mapper;
         }
 
         public void AdminCreate(AuthorFormModel author)
         {
-            var authorData = new Author
-            {
-                Name = author.Name,
-                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = author.Details,
-                PictureUrl = author.PictureUrl
-            };
+            var authorData = this.mapper.Map<Author>(author);
 
             this.data.Authors.Add(authorData);
             this.data.SaveChanges();
@@ -37,19 +40,12 @@
 
         public void UserCreate(AuthorFormModel author, string userId)
         {
-            var authorData = new Author
-            {
-                Name = author.Name,
-                DateOfBirth = DateTime.ParseExact(author.DateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                Details = author.Details,
-                PictureUrl = author.PictureUrl
-            };
+            var authorData = this.mapper.Map<Author>(author);
 
             this.data.Authors.Add(authorData);
             this.data.SaveChanges();
 
-            this.data.Users
-                .FirstOrDefault(u => u.Id == userId)
+            this.users.GetUserById(userId)
                 .AuthorId = authorData.Id;
             this.data.SaveChanges();
         }
@@ -68,32 +64,38 @@
 
         public AuthorDetailsViewModel Details(string id)
         {
-            var author = this.data.Authors.Where(a => a.Id == int.Parse(id))
-                .ToList();
-
-            var authorDetails = author.Select(a => new AuthorDetailsViewModel
-            {
-                Id = int.Parse(id),
-                Name = a.Name,
-                DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
-                Details = a.Details,
-                PictureUrl = a.PictureUrl,
-                Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id))
-            })
+            var authorData = this.data.Authors.Where(a => a.Id == int.Parse(id))
+                .ProjectTo<AuthorDetailsViewModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
-            return authorDetails;
+            authorData.Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id));
+
+            //var author = this.data.Authors.Where(a => a.Id == int.Parse(id))
+            //    .ToList();
+
+            //var authorDetails = author.Select(a => new AuthorDetailsViewModel
+            //{
+            //    Id = int.Parse(id),
+            //    Name = a.Name,
+            //    DateOfBirth = a.DateOfBirth.ToString("dd.MM.yyyy"),
+            //    Details = a.Details,
+            //    PictureUrl = a.PictureUrl,
+            //    Books = this.books.GetAcceptedBooks().Where(b => b.AuthorId == int.Parse(id))
+            //})
+            //    .FirstOrDefault();
+
+            return authorData;
         }
 
         public bool IsAuthor(string id) 
-            => this.data.Users.Find(id).AuthorId.HasValue;
+            => this.users.GetUserById(id).AuthorId.HasValue;
 
 
         public bool IsAuthorOfBook(string userId, string bookId)
-            => this.data.Users.Find(userId).AuthorId == this.data.Books.Find(int.Parse(bookId)).AuthorId;
+            => this.users.GetUserById(userId).AuthorId == this.data.Books.Find(int.Parse(bookId)).AuthorId;
 
         public bool IsCurrentAuthor(string userId, string authorId) 
-            => this.data.Users.Find(userId).AuthorId == int.Parse(authorId);
+            => this.users.GetUserById(userId).AuthorId == int.Parse(authorId);
 
         public IEnumerable<string> GetAuthors()
         {
