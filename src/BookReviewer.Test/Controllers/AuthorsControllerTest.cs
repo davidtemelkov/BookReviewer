@@ -24,7 +24,7 @@ namespace BookReviewer.Test
                 .View();
         
         [Theory]
-        [InlineData("TestName", "10.10.2010", AuthorTestDetails, AuthorTestPictureUrl)]
+        [InlineData("TestName", "10.10.2010", TestDetails, TestPictureUrl)]
         public void PostAddShouldSaveAuhtorHaveValidModelStateAndRedirect(string name, string dateOfBirth, string details, string pictureUrl)
             => MyPipeline
                 .Configuration()
