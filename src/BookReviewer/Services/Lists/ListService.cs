@@ -69,6 +69,13 @@
             return bookDetails;
         }
 
+        public void Delete(string id)
+        {
+            var list = this.data.Lists.FirstOrDefault(l => l.Id == int.Parse(id));
+            this.data.Lists.Remove(list);
+            this.data.SaveChanges();
+        }
+
         public void AddBook(string bookId, string listId)
         {
             this.data.BookLists.Add(new BookList { BookId = int.Parse(bookId), ListId = int.Parse(listId) });
@@ -81,5 +88,10 @@
             this.data.BookLists.Remove(book);
             this.data.SaveChanges();
         }
+
+        public bool UserOwnsList(string userId, string listId)
+            => this.data.Lists
+            .FirstOrDefault(l => l.Id == int.Parse(listId)).UserId == userId;
+        
     }
 }

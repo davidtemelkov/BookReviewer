@@ -2,7 +2,6 @@
 {
     using BookReviewer.Infrastructure;
     using BookReviewer.Models.Lists;
-    using BookReviewer.Services.Books;
     using BookReviewer.Services.Lists;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -45,9 +44,27 @@
         [Authorize]
         public IActionResult Edit(string id)
         {
+            if (!this.lists.UserOwnsList(User.Id(), id)) 
+            {
+                return Unauthorized();
+            }
+
             var details = this.lists.GetListDetails(id);
 
             return View(details);
+        }
+
+        [Authorize]
+        public IActionResult Delete(string id)
+        {
+            if (!this.lists.UserOwnsList(User.Id(), id))
+            {
+                return Unauthorized();
+            }
+
+            this.lists.Delete(id);
+
+            return Redirect($"/Users/Profile/{User.Id()}");
         }
 
         [Authorize]
@@ -56,6 +73,11 @@
             var ids = id.Split("%2F");
             var bookId = ids[0];
             var listId = ids[1];
+
+            if (!this.lists.UserOwnsList(User.Id(), listId))
+            {
+                return Unauthorized();
+            }
 
             this.lists.AddBook(bookId, listId);
 
@@ -68,6 +90,11 @@
             var ids = id.Split("%2F");
             var bookId = ids[0];
             var listId = ids[1];
+
+            if (!this.lists.UserOwnsList(User.Id(), listId))
+            {
+                return Unauthorized();
+            }
 
             this.lists.RemoveBook(bookId, listId);
 
