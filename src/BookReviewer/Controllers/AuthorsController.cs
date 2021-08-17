@@ -5,14 +5,18 @@
     using BookReviewer.Infrastructure;
     using BookReviewer.Models.Authors;
     using Microsoft.AspNetCore.Authorization;
+    using AutoMapper;
 
     public class AuthorsController : Controller
     {
         private readonly IAuthorService authors;
+        private readonly IMapper mapper;
 
-        public AuthorsController(IAuthorService authors)
+        public AuthorsController(IAuthorService authors,
+            IMapper mapper)
         {
             this.authors = authors;
+            this.mapper = mapper;
         }
 
         public IActionResult Add()
@@ -43,13 +47,7 @@
 
             var author = this.authors.Details(id);
 
-            var editAuthorForm = new AuthorFormModel
-            {
-                Name = author.Name,
-                DateOfBirth = author.DateOfBirth,
-                Details = author.Details,
-                PictureUrl = author.PictureUrl
-            };
+            var editAuthorForm = this.mapper.Map<AuthorFormModel>(author);
 
             return View(editAuthorForm);
         }

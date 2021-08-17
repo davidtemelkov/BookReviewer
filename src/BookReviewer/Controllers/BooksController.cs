@@ -9,6 +9,7 @@
     using BookReviewer.Services.Genres;
     using Microsoft.AspNetCore.Authorization;
     using BookReviewer.Services.Authors;
+    using AutoMapper;
 
     public class BooksController : Controller
     {
@@ -16,16 +17,19 @@
         private readonly BookReviewerDbContext data;
         private readonly IGenreService genres;
         private readonly IAuthorService authors;
+        private readonly IMapper mapper;
 
         public BooksController(IBookService books,
             BookReviewerDbContext data,
             IGenreService genres,
-            IAuthorService authors)
+            IAuthorService authors,
+            IMapper mapper)
         {
             this.books = books;
             this.data = data;
             this.genres = genres;
             this.authors = authors;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -71,16 +75,8 @@
 
             var book = this.books.BookDetails(id);
 
-            var editBookForm = new BookFormModel
-            {
-                Title = book.Title,
-                Author = book.AuthorName,
-                CoverUrl = book.CoverUlr,
-                Pages = book.Pages,
-                YearPublished = book.YearPublished,
-                Description = book.Description,
-                Genres = this.genres.GetGenres()
-            };
+            var editBookForm = this.mapper.Map<BookFormModel>(book);
+            editBookForm.Genres = this.genres.GetGenres();
 
             return View(editBookForm);
         }

@@ -5,8 +5,9 @@
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Emails;
     using BookReviewer.Services.Genres;
-    using Microsoft.AspNetCore.Mvc;
+
     using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {

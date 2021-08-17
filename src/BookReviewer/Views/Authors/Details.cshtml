@@ -4,6 +4,7 @@
 @using BookReviewer.Infrastructure
 
 @inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
@@ -19,9 +20,12 @@
                 <span>Details:</span>
                 <p>@Model.Details</p>
 
-                @if (@UserManager.GetUserAsync(User).Result.AuthorId == Model.Id || User.IsAdmin())
+                @if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-dark" asp-controller="Authors" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    @if (@UserManager.GetUserAsync(User).Result.AuthorId == Model.Id || User.IsAdmin())
+                    {
+                        <a class="btn btn-dark" asp-controller="Authors" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    }
                 }
 
             </div>

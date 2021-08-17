@@ -9,7 +9,7 @@
         public int Id { get; init; }
         public string Title { get; init; }
 
-        public string CoverUlr { get; init; }
+        public string CoverUrl { get; init; }
 
         public string YearPublished { get; init; }
 

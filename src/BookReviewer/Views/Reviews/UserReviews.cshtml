@@ -4,6 +4,7 @@
 @using BookReviewer.Infrastructure
 
 @inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
 
 @if (!Model.Reviews.Any())
 {
@@ -28,13 +29,17 @@ else
                     <p>@review.Text</p>
                 }
 
-                @if (User.Id() == review.UserId || User.IsAdmin())
+                @if (SignInManager.IsSignedIn(User))
                 {
-                    <p>
-                        <a class="btn btn-warning" asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id">Edit</a>
-                        <a class="btn btn-danger" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id">Delete</a>
-                    </p>
+                    @if (User.Id() == review.UserId || User.IsAdmin())
+                    {
+                        <p>
+                            <a class="btn btn-warning" asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id">Delete</a>
+                        </p>
+                    }
                 }
+
             </div>
         </div>
     }

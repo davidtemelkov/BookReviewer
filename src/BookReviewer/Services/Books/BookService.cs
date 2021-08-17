@@ -103,7 +103,7 @@
                 AuthorName = b.Author.Name,
                 AuthorId = b.Author.Id,
                 Pages = b.Pages,
-                CoverUlr = b.CoverUrl,
+                CoverUrl = b.CoverUrl,
                 Description = b.Description,
                 YearPublished = b.YearPublished,
                 Genres = string.Join(", ", b.BookGenres.Select(g => g.Genre.Name)),
