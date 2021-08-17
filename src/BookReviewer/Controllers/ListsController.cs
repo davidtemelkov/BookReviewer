@@ -44,7 +44,7 @@
         [Authorize]
         public IActionResult Edit(string id)
         {
-            if (!this.lists.UserOwnsList(User.Id(), id)) 
+            if (!this.lists.UserOwnsList(User.Id(), id) && !User.IsAdmin()) 
             {
                 return Unauthorized();
             }
@@ -57,7 +57,7 @@
         [Authorize]
         public IActionResult Delete(string id)
         {
-            if (!this.lists.UserOwnsList(User.Id(), id))
+            if (!this.lists.UserOwnsList(User.Id(), id) && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -74,7 +74,7 @@
             var bookId = ids[0];
             var listId = ids[1];
 
-            if (!this.lists.UserOwnsList(User.Id(), listId))
+            if (!this.lists.UserOwnsList(User.Id(), listId) && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -91,7 +91,7 @@
             var bookId = ids[0];
             var listId = ids[1];
 
-            if (!this.lists.UserOwnsList(User.Id(), listId))
+            if (!this.lists.UserOwnsList(User.Id(), listId) && !User.IsAdmin())
             {
                 return Unauthorized();
             }
