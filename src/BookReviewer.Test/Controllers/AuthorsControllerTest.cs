@@ -22,49 +22,47 @@ namespace BookReviewer.Test
                 .Which()
                 .ShouldReturn()
                 .View();
-
-        //UserId null
-        //[Theory]
-        //[InlineData("TestName", "10.10.2010", AuthorTestDetails, AuthorTestPictureUrl)]
-        //public void PostAddShouldSaveAuhtorHaveValidModelStateAndRedirect(string name, string dateOfBirth, string details, string pictureUrl)
-        //    => MyPipeline
-        //        .Configuration()
-        //        .ShouldMap(request => request
-        //            .WithLocation("/Authors/Add")
-        //            .WithMethod(HttpMethod.Post)
-        //            .WithFormFields(new
-        //            {
-        //                Name = name,
-        //                DateOfBirth = dateOfBirth,
-        //                Details = details,
-        //                PictureUrl = pictureUrl
-        //            })
-        //            .WithUser(u => u.WithIdentifier(UserTestId))
-        //            .WithAntiForgeryToken())
-        //        .To<AuthorsController>(c => c.Add(new AuthorFormModel
-        //        {
-        //            Name = name,
-        //            DateOfBirth = dateOfBirth,
-        //            Details = details,
-        //            PictureUrl = pictureUrl
-
-        //        }))
-        //        .Which()
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes
-        //            .RestrictingForHttpMethod(HttpMethod.Post))
-        //        .ValidModelState()
-        //        .Data(data => data
-        //            .WithSet<Author>(author => author
-        //                .Any(a =>
-        //                    a.Name == name &&
-        //                    a.DateOfBirth == DateTime.ParseExact(dateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture) &&
-        //                    a.Details == details &&
-        //                    a.PictureUrl == pictureUrl)))
-        //        .AndAlso()
-        //        .ShouldReturn()
-        //        .Redirect(redirect => redirect
-        //            .To<HomeController>(c => c.Index()));
+        
+        [Theory]
+        [InlineData("TestName", "10.10.2010", AuthorTestDetails, AuthorTestPictureUrl)]
+        public void PostAddShouldSaveAuhtorHaveValidModelStateAndRedirect(string name, string dateOfBirth, string details, string pictureUrl)
+            => MyPipeline
+                .Configuration()
+                .ShouldMap(request => request
+                    .WithLocation("/Authors/Add")
+                    .WithMethod(HttpMethod.Post)
+                    .WithFormFields(new
+                    {
+                        Name = name,
+                        DateOfBirth = dateOfBirth,
+                        Details = details,
+                        PictureUrl = pictureUrl
+                    })
+                    .WithUser(u => u.WithIdentifier(UserTestId))
+                    .WithAntiForgeryToken())
+                .To<AuthorsController>(c => c.Add(new AuthorFormModel
+                {
+                    Name = name,
+                    DateOfBirth = dateOfBirth,
+                    Details = details,
+                    PictureUrl = pictureUrl
+                }))
+                .Which()
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForHttpMethod(HttpMethod.Post))
+                .ValidModelState()
+                .Data(data => data
+                    .WithSet<Author>(author => author
+                        .Any(a =>
+                            a.Name == name &&
+                            a.DateOfBirth == DateTime.ParseExact(dateOfBirth, "dd.MM.yyyy", CultureInfo.InvariantCulture) &&
+                            a.Details == details &&
+                            a.PictureUrl == pictureUrl)))
+                .AndAlso()
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index()));
 
 
         //[Theory]

@@ -40,7 +40,7 @@
         {
             if (!this.reviews.UserOwnsReview(User.Id(), id) && !User.IsAdmin())
             {
-                return Unauthorized();
+                return Redirect("/Home/Error");
             }
 
             return View(this.reviews.Details(id));
@@ -63,7 +63,7 @@
         {
             if (!this.reviews.UserOwnsReview(User.Id(), id) && !User.IsAdmin())
             {
-                return Unauthorized();
+                return Redirect("/Home/Error");
             }
 
             var userId = User.Id();

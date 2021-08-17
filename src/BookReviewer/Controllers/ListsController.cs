@@ -46,7 +46,7 @@
         {
             if (!this.lists.UserOwnsList(User.Id(), id) && !User.IsAdmin()) 
             {
-                return Unauthorized();
+                return Redirect("/Home/Error");
             }
 
             var details = this.lists.GetListDetails(id);
@@ -59,7 +59,7 @@
         {
             if (!this.lists.UserOwnsList(User.Id(), id) && !User.IsAdmin())
             {
-                return Unauthorized();
+                return Redirect("/Home/Error");
             }
 
             this.lists.Delete(id);
