@@ -65,7 +65,8 @@
             return Redirect("/");
         }
 
-        public IActionResult AcceptNewBooks() => View(this.books.GetNonAcceptedBooks());
+        public IActionResult AcceptNewBooks() 
+            => View(this.books.GetNonAcceptedBooks());
 
         public IActionResult AcceptBook(string id)
         {
