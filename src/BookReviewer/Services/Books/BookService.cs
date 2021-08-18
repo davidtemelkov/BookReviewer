@@ -85,6 +85,17 @@
             bookData.Description = editedBook.Description;
             bookData.Pages = editedBook.Pages;
             bookData.YearPublished = editedBook.YearPublished;
+            var genres = this.data.BookGenres.Where(bg => bg.BookId == int.Parse(id)).ToList();
+
+            foreach (var genre in genres)
+            {
+                this.data.BookGenres.Remove(genre);
+            }
+
+            foreach (var genre in editedBook.BookGenres)
+            {
+                bookData.BookGenres.Add(new BookGenre { Book = bookData, Genre = data.Genres.FirstOrDefault(g => g.Name == genre) });
+            }
 
             this.data.SaveChanges();
         }
@@ -96,20 +107,7 @@
                 .Include(b => b.Reviews)
                 .ThenInclude(r => r.User);
 
-            var bookDetails = book.Select(b => new BookDetailsViewModel
-            {
-                Id = b.Id,
-                Title = b.Title,
-                AuthorName = b.Author.Name,
-                AuthorId = b.Author.Id,
-                Pages = b.Pages,
-                CoverUrl = b.CoverUrl,
-                Description = b.Description,
-                YearPublished = b.YearPublished,
-                Genres = string.Join(", ", b.BookGenres.Select(g => g.Genre.Name)),
-                Reviews = b.Reviews
-            })
-                .FirstOrDefault();
+            var bookDetails = book.ProjectTo<BookDetailsViewModel>(this.mapper.ConfigurationProvider).FirstOrDefault();
 
             return bookDetails;
         }

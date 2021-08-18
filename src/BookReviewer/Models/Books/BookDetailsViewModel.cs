@@ -21,7 +21,7 @@
 
         public int Pages { get; init; }
 
-        public string Genres { get; init; }
+        public string Genres { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
 

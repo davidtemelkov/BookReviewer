@@ -84,6 +84,13 @@
         [HttpPost]
         public IActionResult Edit(string id, BookFormModel editedBook)
         {
+            if (!ModelState.IsValid)
+            {
+                editedBook.Genres = this.genres.GetGenres();
+
+                return View(editedBook);
+            }
+
             this.books.Edit(id, editedBook);
 
             return Redirect($"/Books/Details/{id}");

@@ -56,10 +56,16 @@
         [HttpPost]
         public IActionResult Edit(string id, AuthorFormModel editedAuthor)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(editedAuthor);
+            }
+
             this.authors.Edit(id, editedAuthor);
 
             return Redirect($"/Authors/Details/{id}");
         }
+
         public IActionResult Details(string id) => View(authors.Details(id));
     }
 }

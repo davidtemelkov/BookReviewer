@@ -38,6 +38,7 @@
             ErrorMessage = "The description of the book must be between {2} and {1} characters!")]
         public string Description { get; init; }
 
+        [Required]
         [Display(Name = "Genres")]
         public ICollection<string> BookGenres { get; init; } 
 

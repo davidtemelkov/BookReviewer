@@ -32,6 +32,9 @@
                 .ForMember(b => b.Author, cfg => cfg.MapFrom(b => b.Author.Name))
                 .ForMember(b => b.Genres, cfg => cfg.MapFrom(b => string.Join(",", b.BookGenres.Select(g => g.Genre.Name))));
 
+            this.CreateMap<Book, BookDetailsViewModel>()
+                 .ForMember(b => b.Genres, cfg => cfg.MapFrom(g => string.Join(", ", g.BookGenres.Select(g => g.Genre.Name))));
+
             this.CreateMap<BookDetailsViewModel, BookFormModel>()
                 .ForMember(b => b.Author, cfg => cfg.MapFrom(b => b.AuthorName))
                 .ForMember(b => b.Genres, cfg => cfg.Ignore());
