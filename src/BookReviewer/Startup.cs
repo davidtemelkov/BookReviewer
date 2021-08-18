@@ -32,7 +32,7 @@ namespace BookReviewer
         {
             services.AddDbContext<BookReviewerDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetValue<string>("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options =>
@@ -68,18 +68,21 @@ namespace BookReviewer
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.PrepareDatabase();
+            //app.PrepareDatabase();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+            //if (env.IsDevelopment())
+            //{
+                
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    app.UseHsts();
+            //}
+
+            app.UseDeveloperExceptionPage();
+            app.UseMigrationsEndPoint();
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
