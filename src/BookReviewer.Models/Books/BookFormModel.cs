@@ -40,7 +40,7 @@
 
         [Required]
         [Display(Name = "Genres")]
-        public ICollection<string> BookGenres { get; init; } 
+        public ICollection<string> BookGenres { get; init; } = new List<string>();
 
         public IEnumerable<string> Genres { get; set; } 
 
