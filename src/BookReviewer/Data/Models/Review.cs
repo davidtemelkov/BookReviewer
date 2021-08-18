@@ -10,7 +10,6 @@
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(ReviewMaxStars)]
         public int Stars { get; set; }
 
         [MaxLength(ReviewTextMaxValue)]

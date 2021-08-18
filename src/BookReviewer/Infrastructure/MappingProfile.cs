@@ -41,6 +41,7 @@
             this.CreateMap<List, ListDetailsViewModel>();
 
             this.CreateMap<ReviewFormModel, Review>()
+                .ForMember(r => r.Stars, cfg => cfg.MapFrom(r => int.Parse(r.Stars)))
                 .ReverseMap();
 
             this.CreateMap<User, UserProfileViewModel>()

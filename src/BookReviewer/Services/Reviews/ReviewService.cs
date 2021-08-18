@@ -34,7 +34,7 @@
         {
             var reviewData = this.data.Reviews.Find(int.Parse(id));
 
-            reviewData.Stars = editedReview.Stars;
+            reviewData.Stars = int.Parse(editedReview.Stars);
             reviewData.Text = editedReview.Text;
 
             this.data.SaveChanges();

@@ -24,9 +24,7 @@
 
         public const int AuthorMaxDetails = 2000;
         public const int AuthorMinDetails = 200;
-
-        public const int ReviewMaxStars = 5;
-        public const int ReviewMinStars = 1;
+        
         public const int ReviewTextMaxValue = 1000;
 
         public const int ListMaxName = 70;
