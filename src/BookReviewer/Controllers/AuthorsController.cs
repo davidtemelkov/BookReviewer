@@ -43,7 +43,7 @@
         {
             if (!this.authors.IsCurrentAuthor(User.Id(), id) && !User.IsAdmin())
             {
-                return Unauthorized();
+                return Redirect("Home/Error");
             }
 
             var author = this.authors.Details(id);

@@ -234,5 +234,140 @@
             //Assert
             Assert.NotNull(searchBooks);
         }
+
+        [Fact]
+        public void GetAcceptedBooks()
+        {
+            //Arrange
+            var genreService = new Mock<IGenreService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+                IsAccepted = true
+            };
+
+            var review = new Review
+            {
+                Stars = 5,
+                Book = book,
+            };
+
+            //Act
+            this.data.Books.Add(book);
+            this.data.Reviews.Add(review);
+            this.data.SaveChanges();
+
+            var acceptedBooks = bookService.GetAcceptedBooks();
+
+            //Assert
+            Assert.NotNull(acceptedBooks);
+        }
+
+        [Fact]
+        public void GetNonAcceptedBooks()
+        {
+            //Arrange
+            var genreService = new Mock<IGenreService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+                IsAccepted = false
+            };
+
+            //Act
+            this.data.Books.Add(book);
+            this.data.SaveChanges();
+
+            var nonAcceptedBooks = bookService.GetNonAcceptedBooks();
+
+            //Assert
+            Assert.NotNull(nonAcceptedBooks);
+        }
+
+        [Fact]
+        public void AdminAcceptBook()
+        {
+            //Arrange
+            var genreService = new Mock<IGenreService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+                IsAccepted = false
+            };
+
+            //Act
+            this.data.Books.Add(book);
+            this.data.SaveChanges();
+
+            bookService.AdminAcceptBook(book.Id.ToString());
+
+            //Assert
+            Assert.True(book.IsAccepted);
+        }
+
+        [Fact]
+        public void AdminDenyBook()
+        {
+            //Arrange
+            var genreService = new Mock<IGenreService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+                IsAccepted = false
+            };
+
+            //Act
+            this.data.Books.Add(book);
+            this.data.SaveChanges();
+
+            bookService.AdminDenyBook(book.Id.ToString());
+
+            //Assert
+            Assert.Null(this.data.Books.FirstOrDefault(b => b.Id == book.Id));
+        }
     }
 }

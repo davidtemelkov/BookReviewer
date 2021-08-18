@@ -238,5 +238,41 @@
             //Assert
             Assert.True(isOwner);
         }
+
+        [Fact]
+        public void GetUserLists()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var genreService = new GenreService(data);
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var listService = new ListService(data,
+                bookService,
+                mapper);
+
+            var user = new User { };
+
+            var list = new List
+            {
+                Name = "TestName",
+                User = user
+            };
+
+            //Act
+            this.data.Users.Add(user);
+            this.data.Lists.Add(list);
+            this.data.SaveChanges();
+
+            var userLists = listService.GetUserLists(user.Id);
+
+            //Assert
+            Assert.NotNull(userLists);
+        }
     }
 }

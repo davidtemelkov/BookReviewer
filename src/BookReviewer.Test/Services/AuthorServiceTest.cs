@@ -204,12 +204,113 @@
             this.data.Users.Add(userNotAuthor);
             this.data.SaveChanges();
 
-            var isAuthor = authorService.IsAuthor("TestId");
-            var isntAuthor = authorService.IsAuthor("TestId2");
+            var isAuthor = authorService.IsAuthor(userAuthor.Id);
+            var isntAuthor = authorService.IsAuthor(userNotAuthor.Id);
 
             //Assert
             Assert.True(isAuthor);
             Assert.False(isntAuthor);
+        }
+
+        [Fact]
+        public void IsCurrentAuthor()
+        {
+            //Arrange
+            var bookService = new Mock<IBookService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var userService = new UserService(data,
+                mapper);
+
+            var authorService = new AuthorService(data,
+                bookService,
+                userService,
+                mapper);
+
+            var author = new Author{ };
+
+            var user = new User
+            {
+                Id = "TestId"
+            };
+
+            //Act
+            this.data.Authors.Add(author);
+            this.data.Users.Add(user);
+            this.data.SaveChanges();
+
+            user.AuthorId = author.Id;
+
+            var isCurrentAuthor = authorService.IsCurrentAuthor(user.Id, author.Id.ToString());
+
+            //Assert
+            Assert.True(isCurrentAuthor);
+        }
+
+        [Fact]
+        public void IsAuthorOfBook()
+        {
+            //Arrange
+            var bookService = new Mock<IBookService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var userService = new UserService(data,
+                mapper);
+
+            var authorService = new AuthorService(data,
+                bookService,
+                userService,
+                mapper);
+
+            var author = new Author { };
+
+            var user = new User
+            {
+                Id = "TestId",
+                AuthorId = author.Id
+            };
+
+            var book = new Book {AuthorId = author.Id };
+
+            //Act
+            this.data.Authors.Add(author); 
+            this.data.Users.Add(user);
+            this.data.Books.Add(book);
+            this.data.SaveChanges();
+
+            var isAuthorOfBook = authorService.IsAuthorOfBook(user.Id, book.Id.ToString());
+
+            //Assert
+            Assert.True(isAuthorOfBook);
+        }
+
+        [Fact]
+        public void GetAuthors()
+        {
+            //Arrange
+            var bookService = new Mock<IBookService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var userService = new UserService(data,
+                mapper);
+
+            var authorService = new AuthorService(data,
+                bookService,
+                userService,
+                mapper);
+
+            var author = new Author { };
+            //Act
+            this.data.Authors.Add(author);
+            this.data.SaveChanges();
+
+            var authors = authorService.GetAuthors();
+
+            //Assert
+            Assert.NotNull(authors);
         }
     }
 }

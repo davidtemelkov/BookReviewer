@@ -186,5 +186,35 @@
             //Assert
             Assert.True(userOwnsReview);
         }
+
+        [Fact]
+        public void Delete()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var reviewService = new ReviewService(data,
+                mapper);
+
+            var book = new Book { };
+
+            var review = new Review
+            {
+                Stars = 1,
+                Text = "TestText",
+                Book = book
+            };
+
+            //Act
+            this.data.Books.Add(book);
+            this.data.Reviews.Add(review);
+            this.data.SaveChanges();
+
+            reviewService.Delete(review.Id.ToString());
+
+            //Assert
+            Assert.Null(this.data.Reviews.Find(review.Id));
+        }
     }
 }

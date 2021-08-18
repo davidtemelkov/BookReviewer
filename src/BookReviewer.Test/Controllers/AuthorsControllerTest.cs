@@ -1,8 +1,13 @@
 namespace BookReviewer.Test
 {
+    using AutoMapper;
     using BookReviewer.Controllers;
+    using BookReviewer.Data;
     using BookReviewer.Data.Models;
+    using BookReviewer.Infrastructure;
     using BookReviewer.Models.Authors;
+    using BookReviewer.Services.Authors;
+    using Moq;
     using MyTested.AspNetCore.Mvc;
     using System;
     using System.Globalization;
@@ -13,16 +18,31 @@ namespace BookReviewer.Test
 
     public class AuthorsControllerTest
     {
-        //[Fact]
-        //public void GetAddShouldReturnView()
-        //    => MyMvc
-        //        .Pipeline()
-        //        .ShouldMap("/Authors/Add")
-        //        .To<AuthorsController>(a => a.Add())
-        //        .Which()
-        //        .ShouldReturn()
-        //        .View();
-        
+        private readonly BookReviewerDbContext data;
+
+        public AuthorsControllerTest()
+        {
+            data = TestStartup.GetContext();
+        }
+
+        [Fact]
+        public void Edit()
+        {
+            //Arrange
+            var authorService = new Mock<IAuthorService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            var authorsController = new AuthorsController(authorService,
+                mapper);
+
+            //Act
+          
+
+            //Assert
+           
+        }
+
         //[Theory]
         //[InlineData("TestName", "10.10.2010", TestDetails, TestPictureUrl)]
         //public void PostAddShouldSaveAuhtorHaveValidModelStateAndRedirect(string name, string dateOfBirth, string details, string pictureUrl)
