@@ -191,61 +191,61 @@
             Assert.Equal(details.Title, book.Title);
         }
 
-        //[Theory]
-        //[InlineData(null, "Any")]
-        //public void SearchBooks(string title, string genre)
-        //{
-        //    var genreService = new Mock<IGenreService>().Object;
-        //    var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
-        //    var mapper = mapperConfig.CreateMapper();
+        [Theory]
+        [InlineData("", "Any")]
+        public void SearchBooks(string title, string genre)
+        {
+            var genreService = new Mock<IGenreService>().Object;
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
 
-        //    var bookService = new BookService(data,
-        //        genreService,
-        //        mapper);
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
 
-        //    //var user = new User
-        //    //{
-        //    //    UserName = "TestUsername"
-        //    //};
+            var user = new User
+            {
+                UserName = "TestUsername"
+            };
 
-        //    //var author = new Author
-        //    //{
-        //    //    Name = "TestName",
-        //    //    DateOfBirth = DateTime.Parse("10.10.2010", CultureInfo.InvariantCulture),
-        //    //    Details = TestDetails,
-        //    //    PictureUrl = TestPictureUrl
-        //    //};
+            var author = new Author
+            {
+                Name = "TestName",
+                DateOfBirth = DateTime.Parse("10.10.2010", CultureInfo.InvariantCulture),
+                Details = TestDetails,
+                PictureUrl = TestPictureUrl
+            };
 
-        //    //var book = new Book
-        //    //{
-        //    //    Title = "TestTitle",
-        //    //    YearPublished = "2010",
-        //    //    Description = TestDetails,
-        //    //    CoverUrl = TestPictureUrl,
-        //    //    Pages = 200,
-        //    //    Author = author,
-        //    //    IsAccepted = true
-        //    //};
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+                Author = author,
+                IsAccepted = true
+            };
 
-        //    //var review = new Review
-        //    //{
-        //    //    Book = book,
-        //    //    Stars = 5,
-        //    //    User = user
-        //    //};
+            var review = new Review
+            {
+                Book = book,
+                Stars = 5,
+                User = user
+            };
 
-        //    //Act
-        //    //this.data.Authors.Add(author);
-        //    //this.data.Books.Add(book);
-        //    //this.data.SaveChanges();
+            //Act
+            this.data.Authors.Add(author);
+            this.data.Books.Add(book);
+            this.data.SaveChanges();
 
-        //    var searchBooks = bookService.SearchBooks(title, genre);
+            var searchBooks = bookService.SearchBooks(title, genre);
 
-        //    var emptyBookQueryModel = new BookQueryViewModel {Books = new List<BookGridViewModel>(),
-        //    Genres = new List<string>()};
+            var emptyBookQueryModel = new BookQueryViewModel {Books = new List<BookGridViewModel>(),
+            Genres = new List<string>()};
 
-        //    //Assert
-        //    Assert.StrictEqual(emptyBookQueryModel, searchBooks);
-        //}
+            //Assert
+            Assert.StrictEqual(emptyBookQueryModel, searchBooks);
+        }
     }
 }

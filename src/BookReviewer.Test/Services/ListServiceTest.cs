@@ -13,6 +13,8 @@
     using Xunit;
     using BookReviewer.Services.Genres;
 
+    using static Data.DataConstants;
+
     public class ListServiceTest
     {
         private readonly BookReviewerDbContext data;
@@ -50,34 +52,191 @@
             Assert.Equal(createdList.Name, inputModel.Name);
         }
 
-        //[Fact]
-        //public void GetListDetails()
-        //{
-        //    //Arrange
-        //    var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
-        //    var mapper = mapperConfig.CreateMapper();
+        [Fact]
+        public void GetListDetails()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
 
-        //    var genreService = new GenreService(data);
+            var genreService = new GenreService(data);
 
-        //    var bookService = new BookService(data,
-        //        genreService,
-        //        mapper);
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
 
-        //    var listService = new ListService(data,
-        //        bookService,
-        //        mapper);
+            var listService = new ListService(data,
+                bookService,
+                mapper);
 
-        //    var list = new List
-        //    {
-        //        Name = "TestName"
-        //    };
+            var list = new List
+            {
+                Name = "TestName"
+            };
 
-        //    //Act
-        //    var details = listService.GetListDetails(list.Id.ToString());
+            this.data.Lists.Add(list);
+            this.data.SaveChanges();
 
-        //    //Assert
-        //    Assert.NotNull(details);
-        //}
+            //Act
+            var details = listService.GetListDetails(list.Id.ToString());
 
+            //Assert
+            Assert.NotNull(details);
+        }
+
+        [Fact]
+        public void Delete()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+            var genreService = new Mock<IGenreService>().Object;
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var listService = new ListService(data,
+                bookService,
+                mapper);
+
+            var list = new List
+            {
+                Name = "TestName"
+            };
+
+            this.data.Lists.Add(list);
+            this.data.SaveChanges();
+
+            //Act
+            listService.Delete(list.Id.ToString());
+
+            //Assert
+            Assert.Null(this.data.Lists.FirstOrDefault(l => l.Id == list.Id));
+        }
+
+        [Fact]
+        public void AddBook()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+            var genreService = new Mock<IGenreService>().Object;
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var listService = new ListService(data,
+                bookService,
+                mapper);
+
+            var list = new List
+            {
+                Name = "TestName"
+            };
+          
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+            };
+
+            this.data.Books.Add(book);
+            this.data.Lists.Add(list);
+            this.data.SaveChanges();
+
+            //Act
+            listService.AddBook(list.Id.ToString(), book.Id.ToString());
+
+            //Assert
+            Assert.NotNull(this.data.BookLists.FirstOrDefault(bl => bl.ListId == list.Id && bl.BookId == book.Id));
+        }
+
+        [Fact]
+        public void RemoveBook()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+            var genreService = new Mock<IGenreService>().Object;
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var listService = new ListService(data,
+                bookService,
+                mapper);
+
+            var list = new List
+            {
+                Name = "TestName"
+            };
+
+            var book = new Book
+            {
+                Title = "TestTitle",
+                YearPublished = "2010",
+                Description = TestDetails,
+                CoverUrl = TestPictureUrl,
+                Pages = 200,
+            };
+
+            var bookList = new BookList
+            {
+                Book = book,
+                List = list
+            };
+
+            this.data.Books.Add(book);
+            this.data.Lists.Add(list);
+            this.data.BookLists.Add(bookList);
+            this.data.SaveChanges();
+
+            //Act
+            listService.RemoveBook(list.Id.ToString(), book.Id.ToString());
+
+            //Assert
+            Assert.Null(this.data.BookLists.FirstOrDefault(bl => bl.ListId == list.Id && bl.BookId == book.Id));
+        }
+
+        [Fact]
+        public void UserOwnsList()
+        {
+            //Arrange
+            var mapperConfig = new MapperConfiguration(x => x.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
+            var genreService = new Mock<IGenreService>().Object;
+
+            var bookService = new BookService(data,
+                genreService,
+                mapper);
+
+            var listService = new ListService(data,
+                bookService,
+                mapper);
+
+            var user = new User { UserName = "TestUsername" };
+
+            var list = new List
+            {
+                Name = "TestName",
+                User = user
+            };
+
+            //Act
+            this.data.Users.Add(user);
+            this.data.Lists.Add(list);
+            this.data.SaveChanges();
+
+            var isOwner = listService.UserOwnsList(user.Id, list.Id.ToString());
+
+            //Assert
+            Assert.True(isOwner);
+        }
     }
 }
