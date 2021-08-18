@@ -2,6 +2,7 @@
 {
     using SendGrid;
     using SendGrid.Helpers.Mail;
+
     using Microsoft.Extensions.Configuration;
     using System.Threading.Tasks;
 

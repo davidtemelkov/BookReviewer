@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewer", "BookReviewer\BookReviewer.csproj", "{0238C981-CDF8-4AE8-ABCB-81A5CFC4E2BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewer.Test", "BookReviewer.Test\BookReviewer.Test.csproj", "{211E013A-5CAA-46E2-A036-FCC8A94B3CE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewer.Test", "BookReviewer.Test\BookReviewer.Test.csproj", "{211E013A-5CAA-46E2-A036-FCC8A94B3CE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewer.Data", "BookReviewer.Data\BookReviewer.Data.csproj", "{456EE4EC-135A-43FB-BC69-CA8E743AFBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewer.Services", "BookReviewer.Services\BookReviewer.Services.csproj", "{F07189F3-1633-4760-9C6B-CD279FE3F214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewer.Models", "BookReviewer.Models\BookReviewer.Models.csproj", "{2307A76D-9AF8-488E-8651-1B135CDE6A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{211E013A-5CAA-46E2-A036-FCC8A94B3CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{211E013A-5CAA-46E2-A036-FCC8A94B3CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{211E013A-5CAA-46E2-A036-FCC8A94B3CE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456EE4EC-135A-43FB-BC69-CA8E743AFBBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456EE4EC-135A-43FB-BC69-CA8E743AFBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456EE4EC-135A-43FB-BC69-CA8E743AFBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456EE4EC-135A-43FB-BC69-CA8E743AFBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07189F3-1633-4760-9C6B-CD279FE3F214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07189F3-1633-4760-9C6B-CD279FE3F214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07189F3-1633-4760-9C6B-CD279FE3F214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07189F3-1633-4760-9C6B-CD279FE3F214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2307A76D-9AF8-488E-8651-1B135CDE6A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2307A76D-9AF8-488E-8651-1B135CDE6A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2307A76D-9AF8-488E-8651-1B135CDE6A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2307A76D-9AF8-488E-8651-1B135CDE6A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
