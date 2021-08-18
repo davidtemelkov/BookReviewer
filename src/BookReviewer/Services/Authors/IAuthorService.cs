@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Services.Authors
 {
     using BookReviewer.Models.Authors;
+
     using System.Collections.Generic;
 
     public interface IAuthorService

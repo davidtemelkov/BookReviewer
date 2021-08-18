@@ -1,15 +1,13 @@
 ﻿namespace BookReviewer.Test.Services
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Infrastructure;
-    using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
-    using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Genres;
-    using BookReviewer.Services.Users;
+
+    using AutoMapper;
     using Moq;
     using System;
     using System.Collections.Generic;
@@ -192,7 +190,7 @@
         }
 
         [Theory]
-        [InlineData("", "Any")]
+        [InlineData("TestTitle", "Any")]
         public void SearchBooks(string title, string genre)
         {
             var genreService = new Mock<IGenreService>().Object;
@@ -208,14 +206,6 @@
                 UserName = "TestUsername"
             };
 
-            var author = new Author
-            {
-                Name = "TestName",
-                DateOfBirth = DateTime.Parse("10.10.2010", CultureInfo.InvariantCulture),
-                Details = TestDetails,
-                PictureUrl = TestPictureUrl
-            };
-
             var book = new Book
             {
                 Title = "TestTitle",
@@ -223,29 +213,26 @@
                 Description = TestDetails,
                 CoverUrl = TestPictureUrl,
                 Pages = 200,
-                Author = author,
                 IsAccepted = true
             };
 
             var review = new Review
             {
-                Book = book,
                 Stars = 5,
+                Book = book,
                 User = user
             };
 
             //Act
-            this.data.Authors.Add(author);
+            this.data.Users.Add(user);
             this.data.Books.Add(book);
+            this.data.Reviews.Add(review);
             this.data.SaveChanges();
 
             var searchBooks = bookService.SearchBooks(title, genre);
 
-            var emptyBookQueryModel = new BookQueryViewModel {Books = new List<BookGridViewModel>(),
-            Genres = new List<string>()};
-
             //Assert
-            Assert.StrictEqual(emptyBookQueryModel, searchBooks);
+            Assert.NotNull(searchBooks);
         }
     }
 }

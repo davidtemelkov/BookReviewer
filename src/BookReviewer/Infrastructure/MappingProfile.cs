@@ -1,12 +1,13 @@
 ﻿namespace BookReviewer.Infrastructure
 {
-    using AutoMapper;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Lists;
     using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
+
+    using AutoMapper;
     using System;
     using System.Globalization;
     using System.Linq;

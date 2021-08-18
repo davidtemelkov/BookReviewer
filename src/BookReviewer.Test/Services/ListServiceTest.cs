@@ -1,17 +1,17 @@
 ﻿namespace BookReviewer.Test.Services
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Infrastructure;
     using BookReviewer.Models.Lists;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Lists;
+    using BookReviewer.Services.Genres;
 
+    using AutoMapper;
     using System.Linq;
     using Moq;
     using Xunit;
-    using BookReviewer.Services.Genres;
 
     using static Data.DataConstants;
 
@@ -74,10 +74,10 @@
                 Name = "TestName"
             };
 
+            //Act
             this.data.Lists.Add(list);
             this.data.SaveChanges();
 
-            //Act
             var details = listService.GetListDetails(list.Id.ToString());
 
             //Assert
@@ -105,10 +105,10 @@
                 Name = "TestName"
             };
 
+            //Act
             this.data.Lists.Add(list);
             this.data.SaveChanges();
 
-            //Act
             listService.Delete(list.Id.ToString());
 
             //Assert
@@ -145,11 +145,11 @@
                 Pages = 200,
             };
 
+            //Act
             this.data.Books.Add(book);
             this.data.Lists.Add(list);
             this.data.SaveChanges();
 
-            //Act
             listService.AddBook(list.Id.ToString(), book.Id.ToString());
 
             //Assert
@@ -192,12 +192,12 @@
                 List = list
             };
 
+            //Act
             this.data.Books.Add(book);
             this.data.Lists.Add(list);
             this.data.BookLists.Add(bookList);
             this.data.SaveChanges();
 
-            //Act
             listService.RemoveBook(list.Id.ToString(), book.Id.ToString());
 
             //Assert

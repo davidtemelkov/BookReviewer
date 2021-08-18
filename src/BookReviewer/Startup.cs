@@ -10,6 +10,7 @@ namespace BookReviewer
     using BookReviewer.Services.Lists;
     using BookReviewer.Services.Reviews;
     using BookReviewer.Services.Users;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;

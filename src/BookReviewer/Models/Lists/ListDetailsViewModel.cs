@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Models.Lists
 {
     using BookReviewer.Models.Books;
+
     using System.Collections.Generic;
 
 

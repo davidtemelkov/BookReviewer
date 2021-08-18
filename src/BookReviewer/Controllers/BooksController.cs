@@ -3,13 +3,14 @@
     using BookReviewer.Data;
     using BookReviewer.Models.Books;
     using BookReviewer.Services.Books;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
     using BookReviewer.Infrastructure;
     using BookReviewer.Services.Genres;
-    using Microsoft.AspNetCore.Authorization;
     using BookReviewer.Services.Authors;
+
+    using System.Linq;
     using AutoMapper;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     public class BooksController : Controller
     {

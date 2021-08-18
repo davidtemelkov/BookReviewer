@@ -2,11 +2,17 @@
 {
     using BookReviewer.Data;
 
+    using Microsoft.Extensions.Configuration;
     using Microsoft.EntityFrameworkCore;
     using System;
 
-    public class TestStartup
+    public class TestStartup : Startup
     {
+        public TestStartup(IConfiguration configuration)
+           : base(configuration)
+        {
+        }
+
         public static BookReviewerDbContext GetContext()
         {
             var dbContextOptions = new DbContextOptionsBuilder<BookReviewerDbContext>()

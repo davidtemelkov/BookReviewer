@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Models.Authors
 {
     using BookReviewer.Models.Books;
+
     using System.Collections.Generic;
 
     public class AuthorDetailsViewModel

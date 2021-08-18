@@ -1,19 +1,14 @@
 ﻿namespace BookReviewer.Test.Services
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Infrastructure;
-    using BookReviewer.Models.Lists;
-    using BookReviewer.Services.Books;
-    using BookReviewer.Services.Lists;
-
-    using System.Linq;
-    using Moq;
-    using Xunit;
-    using BookReviewer.Services.Genres;
     using BookReviewer.Services.Reviews;
     using BookReviewer.Models.Reviews;
+
+    using AutoMapper;
+    using System.Linq;
+    using Xunit;
 
     public class ReviewServiceTest
     {

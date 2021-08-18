@@ -1,6 +1,5 @@
 ﻿namespace BookReviewer.Test.Services
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Infrastructure;
@@ -9,6 +8,7 @@
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Users;
 
+    using AutoMapper;
     using Moq;
     using System;
     using System.Globalization;
@@ -83,8 +83,9 @@
 
             string userId = "TestId";
 
-            //Act
             var user = new User { Id = userId };
+
+            //Act
             this.data.Users.Add(user);
             this.data.SaveChanges();
 

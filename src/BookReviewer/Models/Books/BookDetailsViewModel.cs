@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Models.Books
 {
     using BookReviewer.Data.Models;
+
     using System.Collections.Generic;
     using System.Linq;
 

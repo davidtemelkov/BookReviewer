@@ -2,8 +2,9 @@
 {
     using BookReviewer.Models.Reviews;
     using BookReviewer.Services.Reviews;
-    using Microsoft.AspNetCore.Mvc;
     using BookReviewer.Infrastructure;
+
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
     public class ReviewsController : Controller

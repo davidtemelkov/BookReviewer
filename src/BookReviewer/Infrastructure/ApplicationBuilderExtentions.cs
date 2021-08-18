@@ -2,6 +2,7 @@
 {
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;

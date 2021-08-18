@@ -1,12 +1,13 @@
 ﻿namespace BookReviewer.Services.Authors
 {
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Authors;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Users;
+
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

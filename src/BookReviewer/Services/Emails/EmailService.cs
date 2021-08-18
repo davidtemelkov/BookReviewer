@@ -1,9 +1,8 @@
 ﻿namespace BookReviewer.Services.Emails
 {
-    using Microsoft.Extensions.Configuration;
     using SendGrid;
     using SendGrid.Helpers.Mail;
-    using System;
+    using Microsoft.Extensions.Configuration;
     using System.Threading.Tasks;
 
 

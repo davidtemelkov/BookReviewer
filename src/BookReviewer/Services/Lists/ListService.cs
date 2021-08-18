@@ -1,13 +1,13 @@
 ﻿namespace BookReviewer.Services.Lists
 {
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Books;
     using BookReviewer.Models.Lists;
     using BookReviewer.Services.Books;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
 

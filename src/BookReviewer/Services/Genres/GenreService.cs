@@ -1,6 +1,7 @@
 ﻿namespace BookReviewer.Services.Genres
 {
     using BookReviewer.Data;
+
     using System.Collections.Generic;
     using System.Linq;
 

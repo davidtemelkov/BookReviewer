@@ -1,10 +1,11 @@
 ﻿namespace BookReviewer.Services.Reviews
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Reviews;
     using BookReviewer.Models.Users;
+
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
 

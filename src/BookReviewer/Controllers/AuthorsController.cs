@@ -1,11 +1,12 @@
 ﻿namespace BookReviewer.Controllers
 {
     using BookReviewer.Services.Authors;
-    using Microsoft.AspNetCore.Mvc;
     using BookReviewer.Infrastructure;
     using BookReviewer.Models.Authors;
-    using Microsoft.AspNetCore.Authorization;
+
     using AutoMapper;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     public class AuthorsController : Controller
     {

@@ -1,9 +1,10 @@
 ﻿namespace BookReviewer.Services.Users
 {
-    using AutoMapper;
     using BookReviewer.Data;
     using BookReviewer.Data.Models;
     using BookReviewer.Models.Users;
+
+    using AutoMapper;
     using System.Linq;
 
     public class UserService : IUserService
