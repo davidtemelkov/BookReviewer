@@ -20,5 +20,9 @@
         BookDetailsViewModel BookDetails(string id);
 
         BookQueryViewModel SearchBooks(string searchTerm, string genre);
+
+        public void AdminAcceptBook(string id);
+
+        public void AdminDenyBook(string id);
     }
 }

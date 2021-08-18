@@ -146,5 +146,20 @@
                 };
             }
         }
+
+        public void AdminAcceptBook(string id)
+        {
+            var book = this.data.Books.Find(int.Parse(id));
+
+            book.IsAccepted = true;
+            this.data.SaveChanges();
+        }
+
+        public void AdminDenyBook(string id)
+        {
+            var book = this.data.Books.Find(int.Parse(id));
+            this.data.Books.Remove(book);
+            this.data.SaveChanges();
+        }
     }
 }
