@@ -1,7 +1,7 @@
 ﻿namespace BookReviewer.Test.Routing
 {
     using BookReviewer.Controllers;
-    using BookReviewer.Models.Lists;
+
     using BookReviewer.Models.Reviews;
     using MyTested.AspNetCore.Mvc;
     using Xunit;

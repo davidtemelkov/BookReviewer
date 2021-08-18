@@ -22,7 +22,19 @@ else
                 <a asp-controller="Books" asp-action="Details" asp-route-id="@review.BookId" class="display-5 fw-bolder">@review.Book.Title</a>
                 <span class="text-decoration-line-through">by</span>
                 <a asp-controller="Authors" asp-action="Details" asp-route-id="@review.Book.AuthorId">@review.Book.Author.Name</a>
-                <p class="mt-2">@review.User.UserName rated it @review.Stars.ToString() stars</p>
+                <p class="mt-2">
+                    @review.User.UserName rated it
+
+                    @for (int i = 1; i <= review.Stars; i++)
+                    {
+                        <i class="bi bi-star-fill"></i>
+                    }
+                    @for (int i = 1; i <= 5 - review.Stars; i++)
+                    {
+                        <i class="bi bi-star"></i>
+                    }  
+
+                </p>
 
                 @if (@review.Text != null)
                 {

@@ -8,6 +8,7 @@
     using BookReviewer.Services.Authors;
     using BookReviewer.Services.Books;
     using BookReviewer.Services.Users;
+
     using Moq;
     using System;
     using System.Globalization;

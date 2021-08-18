@@ -19,7 +19,42 @@
                 <p>Pages: @Model.Pages</p>
                 <p>Year published: @Model.YearPublished</p>
                 <p>Genres: @Model.Genres</p>
-                <p>Rating: @Model.AverageRating</p>
+
+                @if (Model.AverageRating != "No ratings yet.")
+                {
+                    <p>
+                        Rating:  @{
+                            var average = double.Parse(Model.AverageRating);
+
+                            for (int i = 1; i <= average; i++)
+                            {
+                                <i class="bi bi-star-fill"></i>
+                            }
+
+                            if (average - Math.Floor(average) != 0)
+                            {
+                                <i class="bi bi-star-half"></i>
+
+                                for (int i = 1; i <= 5 - average; i++)
+                                {
+                                    <i class="bi bi-star"></i>
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 1; i <= 5 - average; i++)
+                                {
+                                    <i class="bi bi-star"></i>
+                                }
+                            }
+                        }
+                    </p>
+                }
+                else
+                {
+                    <p>Rating: @Model.AverageRating</p>
+                }
+
                 <p>Description:</p>
                 <p>@Model.Description</p>
 
@@ -53,7 +88,20 @@
         {
             foreach (var review in Model.Reviews.OrderByDescending(x => x.DateAdded))
             {
-                <p><a asp-controller="Users" asp-action="Profile" asp-route-id="@review.UserId">@review.User.UserName</a> rated it @review.Stars.ToString() stars</p>
+                <p>
+                    <a asp-controller="Users" asp-action="Profile" asp-route-id="@review.UserId">@review.User.UserName</a> rated it
+
+                    @for (int i = 1; i <= review.Stars; i++)
+                    {
+                        <i class="bi bi-star-fill"></i>
+                    }
+                    @for (int i = 1; i <= 5 - review.Stars; i++)
+                    {
+                        <i class="bi bi-star"></i>
+                    } 
+
+                </p>
+
                 @if (@review.Text != null)
                 {
                     <p>@review.Text</p>
