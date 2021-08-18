@@ -53,6 +53,7 @@
         {
             var bookData = this.mapper.Map<Book>(book);
             bookData.Author = this.data.Authors.FirstOrDefault(a => a.Name == book.Author);
+            bookData.IsAccepted = true;
 
             foreach (var genre in book.BookGenres)
             {
